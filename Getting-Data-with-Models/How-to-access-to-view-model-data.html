@@ -1,0 +1,21 @@
+<h2>How to Access ViewModel Data</h2>
+
+<p>Once data is sent from our controller via <code>setViewData()</code> or as the second parameter in the <code>res.render()</code> function, it becomes accessible in our templates via the <code>pdict</code> variable, as we learned in previous chapters. For example, some model properties are used in the <code>cart.isml</code> template, as shown below:</p>
+
+<h3>ViewModels</h3>
+
+<p>As previously mentioned, in SFCC, ViewModels are objects specifically created for the page we are rendering or the request we are responding to.</p>
+
+<p>Whenever you see data being sent through the <code>res.render</code> or <code>res.json</code> functions, and the data is enclosed in curly braces <code>{}</code>, that’s your ViewModel.</p>
+
+<p>To access this data on your page, you should consider it as entries in your <code>pdict</code> object. For example, in the <code>Search Controller</code>, specifically the <code>Refinebar</code> endpoint:</p>
+
+<p>Check how the <code>search/searchRefineBar.isml</code> template accesses the <code>productSearch</code> object due to the <code>{}</code> syntax: The objects are included inside <code>pdict</code>.</p>
+
+<h3>Exercise: Extending the Cart Model</h3>
+
+<p>When loading the Cart page, we no longer have access to the notes (which the basket instance inherits from <code>LineItemCtnr</code>). However, for the current project, we want to have access to those notes when the user goes to the Cart page. If there are no notes, we should display the following message: "You have no notes on your cart."</p>
+
+<p>The basket notes are located inside the basket object retrieved by <code>BasketMgr.getCurrentBasket()</code>. According to the official documentation for the <code>Basket</code> class, it has an attribute called <code>notes</code> that contains the information we need.</p>
+
+<p>Inside the <code>CartModel</code>, we have the basket instance, which contains the <code>notes</code> array. Therefore, we should add this data to the model.</p>
