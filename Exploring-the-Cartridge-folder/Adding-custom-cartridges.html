@@ -1,0 +1,35 @@
+<h2>Adding Custom Cartridges</h2>
+
+<p>There are hundreds of cartridges available that can save time and effort, so you don’t have to reinvent the wheel. Often, your project will benefit from using these cartridges.</p>
+
+<p>SFCC provides a list of more than 300 cartridges that you can use. To incorporate a cartridge into your project:</p>
+
+<ol>
+    <li>Download the source from GitHub.</li>
+    <li>Copy the cartridge from inside the <code>cartridges</code> folder.</li>
+    <li>Place it inside the <code>cartridges</code> folder in your project root directory.</li>
+    <li>Add the cartridge name to your path.</li>
+</ol>
+
+<p>When a call is made to a file, your sandbox searches for the file starting with the first cartridge listed in the cartridge path. For example, if a call is made to the <code>productDetails.isml</code> file and that file exists in two cartridges listed in the cartridge path, the first one found will be used.</p>
+
+<h2>Using WebDAV to View Your Cartridges on Business Manager</h2>
+
+<p>Administrators and developers use WebDAV to manage files and folders on B2C Commerce servers. If you are unsure whether your file or modifications have been uploaded to your sandbox, you can use this tool to verify.</p>
+
+<p>Follow these steps to ensure that all your cartridges are correctly uploaded to the sandbox:</p>
+
+<ol>
+    <li>Log into the Business Manager instance where you want to view cartridge contents (e.g., staging instance).</li>
+    <li>Select <strong>Administration > Site Development > Development Setup</strong>.</li>
+    <li>In the <strong>WebDAV Access</strong> section, click the <strong>Cartridges</strong> link.</li>
+    <li>An authentication dialog might appear if this is your first time accessing it after opening your browser.</li>
+    <li>Enter your Business Manager username and password.</li>
+    <li>Click <strong>OK</strong>.</li>
+    <li>Click the code version you created when you imported the RefArch site to view the uploaded cartridges.</li>
+    <li>Click the link corresponding to the name of the cartridge you just created.</li>
+</ol>
+
+<h2>📝 Exercise: Create a New Cartridge Manually</h2>
+
+<p>Create a new cartridge and make it work. Repeat all the steps and create a new cartridge called <code>app_storefront_base_test</code>.</p>
