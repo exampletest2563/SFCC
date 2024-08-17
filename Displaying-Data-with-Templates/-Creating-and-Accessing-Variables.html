@@ -1,0 +1,64 @@
+<h2>Creating and Accessing Variables</h2>
+
+<p>You can create and access custom variables in an ISML template using the <code>&lt;isset&gt;</code> tag. When using the <code>&lt;isset&gt;</code> tag, both the <code>name</code> and <code>value</code> attributes are required. The default scope is the session, so you need to specify the scope explicitly if you want to use a different one.</p>
+
+<p>Example usage:</p>
+<pre><code>&lt;isset name="&lt;name&gt;" value="&lt;expression&gt;" scope="session"|"request"|"page"/&gt;</code></pre>
+
+<h3>Value Attribute</h3>
+<p>The <code>value</code> attribute of the <code>&lt;isset&gt;</code> tag can be a hardcoded string or number, or an ISML expression that accesses another variable or object.</p>
+<table>
+  <thead>
+    <tr>
+      <th>Value Type</th>
+      <th>Example</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>String</td>
+      <td><code>value="hardcoded text"</code></td>
+    </tr>
+    <tr>
+      <td>Expression</td>
+      <td><code>value="${pdict.myProduct.name}"</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<h3>Scope Attribute</h3>
+<p>The <code>scope</code> attribute of the <code>&lt;isset&gt;</code> tag determines the accessibility levels of the variable, such as session, request, and page. Understanding these scopes is important to ensure that the variable is accessible where needed. The scopes are listed from the widest to the narrowest access:</p>
+<table>
+  <thead>
+    <tr>
+      <th>Scope</th>
+      <th>Definition</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>session</td>
+      <td>Available throughout the entire customer session, even across multiple requests. Any variable added to the session scope becomes a custom attribute of the session object. Since it is not a standard attribute, it must be accessed with the <code>session.custom</code> qualifier: <code>${session.custom.myVar}</code></td>
+    </tr>
+    <tr>
+      <td>request</td>
+      <td>Variables are available only for the current internal Salesforce B2C Commerce request. The request variable is not available for multiple requests, so it is not accessible after an interaction continue node.</td>
+    </tr>
+    <tr>
+      <td>page</td>
+      <td>Available only for a specific ISML page and its locally included pages. The scope is limited to the current template and any locally included templates. These variables are accessed without a prefix: <code>${pageVar}</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Here are some examples of using the <code>&lt;isset&gt;</code> tag and retrieving variables from different scopes:</p>
+<pre><code>&lt;isset name="x" value="12343" scope="session"/&gt;
+&lt;isset name="x" value="${12343}" scope="session"/&gt;
+&lt;iscomment&gt; Session is implied here &lt;/iscomment&gt;
+&lt;isset name="x" value="12343"/&gt;
+
+Retrieving from session: ${session.custom.x} | ${pdict.CurrentSession.custom.x}
+Request Scope: ${request.custom.x} | ${pdict.CurrentRequest.custom.x}
+Page Scope: ${x}</code></pre>
+
+<p>More information about the <code>&lt;isset&gt;</code> tag can be found in the official documentation.</p>
