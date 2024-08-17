@@ -1,0 +1,149 @@
+<h2>ISML Tags and Expressions</h2>
+
+<p>ISML tags are Commerce Cloud proprietary extensions to HTML that developers use inside ISML templates. ISML tags and expressions can only be written in ISML templates.</p>
+
+<p>ISML tags always start with <code>is</code>, e.g., <code>&lt;isprint&gt;</code>, and describe, together with regular HTML, how dynamic data will be embedded and formatted on the page.</p>
+
+<p>Depending on their tasks, ISML tags can be divided into the following groups as shown in the table below:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Group</th>
+      <th>Tags</th>
+      <th>Purpose</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>HTTP-related</td>
+      <td><code>&lt;iscookie&gt;</code></td>
+      <td>Sets cookies in the browser</td>
+    </tr>
+    <tr>
+      <td></td>
+      <td><code>&lt;iscontent&gt;</code></td>
+      <td>Sets the MIME type</td>
+    </tr>
+    <tr>
+      <td></td>
+      <td><code>&lt;isredirect&gt;</code></td>
+      <td>Redirects browsers to specific URLs</td>
+    </tr>
+    <tr>
+      <td></td>
+      <td><code>&lt;isstatus&gt;</code></td>
+      <td>Defines status codes</td>
+    </tr>
+    <tr>
+      <td>Flow Control</td>
+      <td><code>&lt;isif&gt;</code></td>
+      <td>Evaluates a condition</td>
+    </tr>
+    <tr>
+      <td></td>
+      <td><code>&lt;iselse&gt; &lt;iselseif&gt;</code></td>
+      <td>Specifies alternative logic when an <code>&lt;isif&gt;</code> condition does not evaluate to true</td>
+    </tr>
+    <tr>
+      <td></td>
+      <td><code>&lt;isloop&gt;</code></td>
+      <td>Creates a loop statement</td>
+    </tr>
+    <tr>
+      <td></td>
+      <td><code>&lt;isnext&gt;</code></td>
+      <td>Jumps to the next iteration in a loop statement</td>
+    </tr>
+    <tr>
+      <td></td>
+      <td><code>&lt;isbreak&gt;</code></td>
+      <td>Terminates loops</td>
+    </tr>
+    <tr>
+      <td>Variable-related</td>
+      <td><code>&lt;isset&gt;</code></td>
+      <td>Creates a variable</td>
+    </tr>
+    <tr>
+      <td></td>
+      <td><code>&lt;isremove&gt;</code></td>
+      <td>Removes a variable</td>
+    </tr>
+    <tr>
+      <td>Include</td>
+      <td><code>&lt;isinclude&gt;</code></td>
+      <td>Includes the contents of one template on the current template</td>
+    </tr>
+    <tr>
+      <td></td>
+      <td><code>&lt;ismodule&gt;</code></td>
+      <td>Declares a custom tag</td>
+    </tr>
+    <tr>
+      <td></td>
+      <td><code>&lt;iscomponent&gt;</code></td>
+      <td>Includes the output of a controller or pipeline on the current page</td>
+    </tr>
+    <tr>
+      <td>Scripting</td>
+      <td><code>&lt;isscript&gt;</code></td>
+      <td>Allows Commerce Cloud Digital Script execution inside templates</td>
+    </tr>
+    <tr>
+      <td>Forms</td>
+      <td><code>&lt;isselect&gt;</code></td>
+      <td>Enhances the HTML <code>&lt;select&gt;</code> tag</td>
+    </tr>
+    <tr>
+      <td>Output</td>
+      <td><code>&lt;isprint&gt;</code></td>
+      <td>Formats and encodes strings for output</td>
+    </tr>
+    <tr>
+      <td></td>
+      <td><code>&lt;isslot&gt;</code></td>
+      <td>Creates a content slot</td>
+    </tr>
+    <tr>
+      <td></td>
+      <td><code>&lt;iscontentasset&gt;</code></td>
+      <td>Creates a content asset</td>
+    </tr>
+    <tr>
+      <td>Others</td>
+      <td><code>&lt;iscache&gt;</code></td>
+      <td>Caches a page</td>
+    </tr>
+    <tr>
+      <td></td>
+      <td><code>&lt;iscomment&gt;</code></td>
+      <td>Adds comments</td>
+    </tr>
+    <tr>
+      <td></td>
+      <td><code>&lt;isdecorate&gt;</code></td>
+      <td>Reuses a template for page layout</td>
+    </tr>
+    <tr>
+      <td></td>
+      <td><code>&lt;isreplace&gt;</code></td>
+      <td>Replaces content inside a decorator template</td>
+    </tr>
+    <tr>
+      <td>Active Data</td>
+      <td><code>&lt;isactivedatahead&gt;</code></td>
+      <td>Allows collection of active data from pages with a tag</td>
+    </tr>
+    <tr>
+      <td></td>
+      <td><code>&lt;isactivecontenthead&gt;</code></td>
+      <td>Collects category context from a page for active data collection</td>
+    </tr>
+    <tr>
+      <td></td>
+      <td><code>&lt;isobject&gt;</code></td>
+      <td>Collects specific object impressions/views dynamically</td>
+    </tr>
+  </tbody>
+</table>
