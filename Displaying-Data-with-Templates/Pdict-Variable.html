@@ -1,0 +1,44 @@
+<h2>Pdict Variable</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Pdict Keys</th>
+      <th>Alternatives</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>CurrentSession</td>
+      <td>TopLevel.global.session</td>
+    </tr>
+    <tr>
+      <td>CurrentRequest</td>
+      <td>TopLevel.global.request</td>
+    </tr>
+    <tr>
+      <td>CurrentCustomer</td>
+      <td>TopLevel.global.customer</td>
+    </tr>
+    <tr>
+      <td>CurrentHttpParameterMap</td>
+      <td>TopLevel.global.request.httpParameterMap</td>
+    </tr>
+    <tr>
+      <td>CurrentPageMetaData</td>
+      <td>TopLevel.global.request.pageMetaData</td>
+    </tr>
+    <tr>
+      <td>CurrentForms</td>
+      <td>TopLevel.global.session.forms</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>The <code>pdict</code> variable is a hashmap on which key-object pairs can be loaded on the frontend. However, there are some built-in <code>pdict</code> keys (variables) that provide access to the most commonly used objects, such as session and request. This means that any data you send from the backend to the frontend, whether using <code>res.render</code> or <code>res.setViewData</code>, will be loaded inside the <code>pdict</code> variable on the frontend.</p>
+
+<p>ISML expressions provide access to data using dot notation. For example, you can access a property of the Product object in the pipeline dictionary with: <code>${pdict.varName}</code></p>
+
+<p>JavaScript controllers can use alternatives to <code>pdict</code> keys. The table above shows some of them.</p>
+
+<p>In other words, controllers have access to request, response, session, and customer objects just like you have on the frontend using <code>pdict</code>. You just need to use the appropriate import or require statements.</p>
