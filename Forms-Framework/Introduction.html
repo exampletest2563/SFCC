@@ -1,0 +1,24 @@
+<h1>Forms Framework: Handling Commerce Cloud Forms</h1>
+
+<h2>Introduction</h2>
+
+<p>Salesforce Commerce Cloud Digital provides tools to simplify form display and processing. Use the Digital Forms framework to control how consumer-entered values are validated by the application, rendered in a browser, and possibly stored on a server.</p>
+
+<p>To use the Digital Forms framework, you need the following files:</p>
+
+<ul>
+    <li>An XML form to define and store the metadata</li>
+    <li>A Controller that will validate and process the form</li>
+    <li>A resource bundle (.properties) file that contains externalized form labels and possible error messages</li>
+    <li>An ISML template that will display the form to the user</li>
+</ul>
+
+<p>Several objects interact with each other when working with Digital Forms:</p>
+
+<ul>
+    <li><strong>XML metadata file:</strong> Located in the <code>cartridge/forms/default</code> directory. It describes the fields, labels, validation rules, and actions that apply when the field is used in an ISML template.</li>
+    <li><strong>ISML template:</strong> Uses the form metadata fields and actions to show an HTML form to the user.</li>
+    <li><strong>Controller:</strong> Renders your template and processes your form data when you submit it.</li>
+    <li><strong>Resource Bundle:</strong> Contains the labels and titles that are displayed in your form.</li>
+    <li><strong>Object (optional):</strong> Represents a single system or custom object in the <code>pdict</code>. It can be used to pre-fill the metadata file as well as to store submitted form data in the database.</li>
+</ul>
