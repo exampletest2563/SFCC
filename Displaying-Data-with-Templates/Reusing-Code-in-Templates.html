@@ -1,0 +1,79 @@
+<h2>Reusing Code in Templates</h2>
+
+<p>Reusable code saves time in both code creation and updates. It also reduces errors and helps to ensure a consistent look and feel.</p>
+
+<p>You can use the following tags to reuse code in ISML templates:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Tag</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>&lt;isinclude&gt;</code></td>
+      <td>
+        Embeds an ISML template inside an invoking template. There are two types:
+        <ul>
+          <li><strong>Local Include:</strong> Includes the code of one ISML template inside another while generating the page. All variables from the including template are available in the included template, including page variables.</li>
+          <li><strong>Remote Include:</strong> Includes the output of another controller inside an ISML template.
+            <ul>
+              <li>This is used primarily for partial page caching.</li>
+              <li><strong>pdict</strong> and page variables from the invoking template are not available in the included template.</li>
+              <li>The only variables available to a remotely included JavaScript controller are session variables.</li>
+              <li>Includes from another server are not supported.</li>
+            </ul>
+          </li>
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td><code>&lt;isdecorate&gt;</code></td>
+      <td>
+        Decorates the enclosed content with the contents of the specified (decorator) template. A decorator is an ISML template that includes HTML, CSS, and the overall page design.
+      </td>
+    </tr>
+    <tr>
+      <td><code>&lt;ismodule&gt;</code></td>
+      <td>
+        Defines your own ISML tags, which can be used like any standard tags.
+      </td>
+    </tr>
+    <tr>
+      <td><code>&lt;iscomponent&gt;</code></td>
+      <td>
+        Invokes a remote include.
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<h3>Include Syntax</h3>
+
+<p>Local include syntax:</p>
+<pre><code>&lt;isinclude template="[directory/]templatename"/&gt;</code></pre>
+<p>(You do not need to add the <code>.isml</code> extension when including a template)</p>
+
+<p>Remote include syntax:</p>
+<pre><code>&lt;isinclude url="${URLUtils.https('controller_url')}" /&gt;</code></pre>
+
+<h3>Examples:</h3>
+<pre><code>&lt;isinclude template="extras/calendar"/&gt; <!-- Local include -->
+&lt;isinclude url="${URLUtils.url('ConsentTracking-Check')}" /&gt; <!-- Remote include --></code></pre>
+
+<p>In the example, the <code>dw.web.URLUtils.url()</code> method builds a site-specific URL for the <code>ConsentTracking-Check</code> controller. Never hard-code a controller URL, as it would contain a specific server. Use methods from <code>URLUtils</code> instead.</p>
+
+<p>To pass URL parameters to your controller, use the following syntax:</p>
+<pre><code>&lt;isinclude url="${URLUtils.https('controller_url', <parameterId_1>, <parameterValue_1>, .. <parameterId_n>, <parameterValue_n>)}" /&gt;</code></pre>
+
+<p>Finally, you can also implement a remote include using the <code>&lt;iscomponent&gt;</code> tag. This tag also supports passing multiple attributes:</p>
+<pre><code>&lt;iscomponent
+     pipeline="<string>" | <expression> [locale="<string>" | <expression>]
+     [any number of additional arbitrarily named parameters]
+/&gt;</code></pre>
+
+<p>In practice, this tag is not used anywhere in SFRA; instead, we use <code>&lt;isinclude&gt;</code>. The <code>&lt;iscomponent&gt;</code> tag is similar to a remote include but uses pipeline-related attributes to specify the content generating target and allows for arbitrary attributes.</p>
+
+<p>Technically, the <code>&lt;iscomponent&gt;</code> tag performs the same function as a remote include. However, the use of remote includes might not be obvious. The tag, with its direct association to a pipeline, makes its purpose clear. It is intended to embed reusable functionality, encapsulated in a pipeline, into another template. It also allows the embedded component to have a different caching policy than the included page.</p>
