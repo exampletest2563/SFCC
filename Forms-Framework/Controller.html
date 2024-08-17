@@ -1,0 +1,44 @@
+<h2>Controller</h2>
+
+<p>Typically, a controller operates behind the scenes, responsible for rendering the template file and sending the form object to it.</p>
+
+<p>Below is a snippet from the Address Controller file:</p>
+
+<pre><code>...
+// Retrieve address ID from parameters sent to the function call
+var addressId = request.httpParameterMap.addressId.stringValue;
+
+// Retrieve customer data (lines 92-96)
+var customer = CustomerMgr.getCustomerByID(customerId);
+
+// Create a model (line 97)
+var model = {};
+
+// Create data from the form object in the current session using the metadata file definition (line 98)
+model.form = FormData.createFromSession('addressForm');
+
+// Clear an existing form object in the pdict using a specified form metadata file (line 99)
+pdict.addressForm = null;
+
+// Populate the form object with the data retrieved from the API (line 101)
+model.form.populate(customer.getAddress(addressId));
+
+// Render the template file (line 103)
+response.render('addressTemplate', model);
+
+// Send values/objects to be used in the template (lines 104 and 105)
+pdict.customer = customer;
+pdict.model = model;
+</code></pre>
+
+<p>The controller performs the following actions:</p>
+<ul>
+    <li>Retrieves the address ID from the parameters sent to the function call.</li>
+    <li>Retrieves the customer data (lines 92-96).</li>
+    <li>Creates a model (line 97).</li>
+    <li>Creates data from the form object in the current session using the metadata file definition (line 98).</li>
+    <li>Clears an existing form object in the <code>pdict</code> using a specified form metadata file (line 99).</li>
+    <li>Populates the form object with data retrieved from the API (line 101).</li>
+    <li>Renders the template file (line 103).</li>
+    <li>Sends values and objects to be used in the template (lines 104 and 105).</li>
+</ul>
