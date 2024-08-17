@@ -1,0 +1,68 @@
+<h2>Practical Exercises</h2>
+
+<h3>📝 Exercise: Create an ISML Template</h3>
+<ol>
+    <li>On Visual Studio Code, right-click the templates folder where you want to create your ISML file and choose <strong>New File</strong>.</li>
+    <li>Give your file a name with the <code>.isml</code> extension and press <strong>ENTER</strong>.</li>
+</ol>
+
+<h3>📝 Exercise: Set and Retrieve Variables</h3>
+<ol>
+    <li>Create a new controller called <strong>VarTest</strong>.</li>
+    <li>Create a new ISML template called <strong>vartest.isml</strong>.</li>
+    <li>In the template, create a new variable called <strong>sessionVar</strong> with hardcoded text as the value. Set its scope to <strong>session</strong> and print the value to the page:
+        <pre><code>&lt;isset name="sessionVar" value="${1}" scope="session"/&gt;</code></pre>
+    </li>
+    <li>Display the contents of the <strong>sessionVar</strong> variable. Its value is: <code>${session.custom.sessionVar}</code>.</li>
+    <li>Open a web browser and test the controller.</li>
+    <li>Add similar examples using different scopes (<strong>request</strong> and <strong>page</strong>) to the <strong>vartest</strong> template and display them.</li>
+    <li>Modify the examples to use boolean and string values (e.g., <code>${false}</code> and <code>Hello</code>).</li>
+    <li>Test the JavaScript controller again to see the new variable values.</li>
+    <li>Increment the variables using the following syntax: <code>${request.custom.requestVar + 1}</code>.</li>
+    <li>Note: When creating both Request and Session variables, use <code>request.custom.&lt;name&gt;</code> or <code>session.custom.&lt;name&gt;</code> to access the variable. Page variables, on the other hand, can be accessed directly by their name.</li>
+</ol>
+
+<h3>📝 Exercise: Use Local Includes</h3>
+<ol>
+    <li>Study the <strong>productTile.isml</strong> template.</li>
+    <li>Notice that the first <code>&lt;isset&gt;</code> tag expects <code>pdict.product</code> in the pipeline dictionary.</li>
+    <li>Include <strong>productTile.isml</strong> in your current template.</li>
+    <li>Create a new controller called <strong>ShowProduct</strong> with one endpoint where you will retrieve a product using the <code>ProductMgr</code> class.</li>
+    <li>Send your product to your template.</li>
+    <li>Open the <strong>productfound.isml</strong> template.</li>
+    <li>Create a new variable named <strong>product</strong> that receives the value of your product being sent from the template:
+        <pre><code>&lt;isset name="product" value="${pdict.myProduct}" scope="request"/&gt;</code></pre>
+    </li>
+    <li>Test the JavaScript controller with an existing product: <code>&lt;your_storefront_url&gt;/ShowProduct-Start?pid=P0048M</code>.</li>
+</ol>
+
+<h3>📝 Exercise: Use Remote Includes</h3>
+<ol>
+    <li>Create two endpoints in your controller named <strong>RenderTemplate</strong> and <strong>TestRemoteInclude</strong>.</li>
+    <li>Create a new ISML template with any dummy text.</li>
+    <li>In the <strong>RenderTemplate</strong> endpoint, render this template.</li>
+    <li>Create a second ISML template and use a remote include to call your <strong>RenderTemplate</strong> controller endpoint.</li>
+    <li>In the <strong>TestRemoteInclude</strong> endpoint, render your second template.</li>
+    <li>On your storefront site URL, call your <strong>TestRemoteInclude</strong> endpoint.</li>
+</ol>
+
+<h3>📝 Exercise: Use a Decorator</h3>
+<ol>
+    <li>On Visual Studio Code, use the Search function to locate the <strong>common/layout/page.isml</strong> template. Notice the different areas of the page this decorator defines.</li>
+    <li>Locate the <code>&lt;isdecorate&gt;</code> tag.</li>
+    <li>Open the controller you created in the previous exercise and create a new endpoint called <strong>TestDecorator</strong>.</li>
+    <li>Create a new ISML template to be rendered by this new endpoint.</li>
+    <li>Inside your ISML template, add the following:
+        <pre><code>&lt;isdecorate template="common/layout/page"&gt;
+             ..existing content..
+        &lt;/isdecorate&gt;</code></pre>
+    </li>
+    <li>Test the endpoint.</li>
+</ol>
+
+<h3>📝 Exercise: Bonus Track</h3>
+<ol>
+    <li>Use a custom tag.</li>
+    <li>Create a Basket JavaScript Controller and use a loop in ISML.</li>
+    <li>Use resource bundles.</li>
+</ol>
