@@ -1,0 +1,185 @@
+<h2>XML Metadata File</h2>
+
+<p>The XML metadata file is used to define the fields a user will need to enter and specify the actions that can be taken when implementing a form.</p>
+
+<p>This information typically comes from a wireframe or functional specification. Once the form fields are determined, create them in an XML form that will set the form field parameters and hold the data for the form.</p>
+
+<p>The following table shows all the elements that can be used in your XML form file, such as <code>signupform.xml</code>:</p>
+
+<table>
+    <thead>
+        <tr>
+            <th>Element</th>
+            <th>Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><code>form</code></td>
+            <td>Required: Top-level tag that contains all other elements inside.</td>
+        </tr>
+        <tr>
+            <td><code>field</code></td>
+            <td>Required: Defines a data field with many attributes (see table below).</td>
+        </tr>
+        <tr>
+            <td><code>options</code></td>
+            <td>Used as a child element inside a field to pre-fill multiple options like months, days, etc.</td>
+        </tr>
+        <tr>
+            <td><code>option</code></td>
+            <td>Used as a child element inside an options element to specify a single option.</td>
+        </tr>
+        <tr>
+            <td><code>action</code></td>
+            <td>Defines a possible action the user might take on the form.</td>
+        </tr>
+        <tr>
+            <td><code>include</code></td>
+            <td>Allows inclusion of one form metadata definition into another.</td>
+        </tr>
+        <tr>
+            <td><code>list</code></td>
+            <td>Allows inclusion of several items (i.e., a collection of addresses) as a single field.</td>
+        </tr>
+        <tr>
+            <td><code>group</code></td>
+            <td>Allows grouping of elements to be validated together.</td>
+        </tr>
+    </tbody>
+</table>
+
+<p>The <code>field</code> element may use the following attributes:</p>
+
+<table>
+    <thead>
+        <tr>
+            <th>Attribute</th>
+            <th>Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><code>formid</code></td>
+            <td>Required: Unique ID to identify the field for ISML templates and controllers.</td>
+        </tr>
+        <tr>
+            <td><code>type</code></td>
+            <td>Required: Data type for the field (see table below for accepted values).</td>
+        </tr>
+        <tr>
+            <td><code>range-error</code></td>
+            <td>(*) Message shown if the value provided does not fall within the specified range.</td>
+        </tr>
+        <tr>
+            <td><code>parse-error</code></td>
+            <td>(*) Message shown when the data entered does not match the regex. Usually a key to an externalized string.</td>
+        </tr>
+        <tr>
+            <td><code>value-error</code></td>
+            <td>(*) Shown if an element is invalidated in a pipeline.</td>
+        </tr>
+        <tr>
+            <td><code>missing-error</code></td>
+            <td>(*) Message shown if the primary key validation error is generated in a pipeline.</td>
+        </tr>
+        <tr>
+            <td><code>label</code></td>
+            <td>Usually a key to an externalized string in the <code>forms.properties</code> resource bundle.</td>
+        </tr>
+        <tr>
+            <td><code>regexp</code></td>
+            <td>Regular expression for string fields: email, phone, zip code, etc.</td>
+        </tr>
+        <tr>
+            <td><code>description</code></td>
+            <td>Description for the field; might be used in tooltips.</td>
+        </tr>
+        <tr>
+            <td><code>mandatory</code></td>
+            <td>The field is required via server-side validation when true.</td>
+        </tr>
+        <tr>
+            <td><code>min, max</code></td>
+            <td>The valid range for integer, number, and dates.</td>
+        </tr>
+        <tr>
+            <td><code>min-length, max-length</code></td>
+            <td>Restricts the field length for data entry.</td>
+        </tr>
+        <tr>
+            <td><code>binding</code></td>
+            <td>Used to match the field to a persistent object attribute.</td>
+        </tr>
+        <tr>
+            <td><code>masked</code></td>
+            <td>Specify the number of characters to mask.</td>
+        </tr>
+        <tr>
+            <td><code>format</code></td>
+            <td>The format for the display of dates, numbers, etc.</td>
+        </tr>
+        <tr>
+            <td><code>whitespace</code></td>
+            <td>Specify whitespace handling (none or remove).</td>
+        </tr>
+        <tr>
+            <td><code>timezoned</code></td>
+            <td>Optional flag for date objects (true or false).</td>
+        </tr>
+        <tr>
+            <td><code>default-value</code></td>
+            <td>Pre-defines a value for the field.</td>
+        </tr>
+        <tr>
+            <td><code>checked-value</code></td>
+            <td>Value when the field is checked in a form.</td>
+        </tr>
+        <tr>
+            <td><code>unchecked-value</code></td>
+            <td>Value when the field is unchecked in a form.</td>
+        </tr>
+    </tbody>
+</table>
+
+<p>There are four types of errors: <code>range-error</code>, <code>parse-error</code>, <code>missing-error</code>, and <code>value-error</code>. Two attributes are required: <code>formid</code> and <code>type</code>. For definitions, refer to the cells marked with an asterisk (*).</p>
+
+<p>The data type to be used for the <code>type</code> attribute on the <code>&lt;field&gt;</code> element can be one of the following:</p>
+
+<table>
+    <thead>
+        <tr>
+            <th>Data Type</th>
+            <th>Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><code>string</code></td>
+            <td>Use for text data.</td>
+        </tr>
+        <tr>
+            <td><code>integer</code></td>
+            <td>Use for numeric data like days, months.</td>
+        </tr>
+        <tr>
+            <td><code>number</code></td>
+            <td>Use for quantity fields.</td>
+        </tr>
+        <tr>
+            <td><code>boolean</code></td>
+            <td>Use with multiple-choice fields.</td>
+        </tr>
+        <tr>
+            <td><code>date</code></td>
+            <td>Use this when <code>timezoned</code> or <code>format</code> are needed for dates.</td>
+        </tr>
+    </tbody>
+</table>
+<p>In this example, the fields <code>firstname</code>, <code>lastname</code>, and others store some of the information needed in the user profile. You will notice that some fields are mandatory due to the attribute <code>mandatory="true"</code>.</p>
+
+<p>Additionally, all of these fields contain label keys that point to the <code>cartridge/templates/resources/forms.properties</code> file (by default, labels used on forms are defined inside this file).</p>
+
+<p>Finally, the <code>postalCode</code> field has an extra requirement. It uses a regular expression (<code>regexp</code>) to define what an acceptable postal code can be and specifies a <code>parse-error</code> key that matches an error message in the <code>forms.properties</code> file.</p>
+
+<p>The <code>action</code> tag, when present, identifies the possible actions that a user may take on the form. The attribute <code>valid-form="true"</code> in this tag indicates that this form requires validation; the mandatory fields will be enforced on the server-side.</p>
