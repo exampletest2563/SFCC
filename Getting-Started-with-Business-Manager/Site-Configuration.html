@@ -1,0 +1,35 @@
+<p>After creating an empty site, let’s check some final configurations.</p>
+
+<p><strong>Code Version</strong></p>
+
+<p>When you imported your RefArch site, a code version was created along with it. But what is a code version? It is essentially a directory containing all your cartridges.</p>
+
+<p>B2C Commerce allows you to have multiple custom code versions uploaded to the system simultaneously. You can name each of your versions as you prefer, such as <strong>v12</strong> or <strong>summer_release</strong>.</p>
+
+<p>Select <strong>Administration → Site Development → Code Deployment</strong> and check the existing code versions. You will notice one that starts with <strong>SFRA_AP</strong>. That is the code version created for your RefArch site.</p>
+
+<p>Remember how to check your code version because you will need it later to sync your local code with the sandbox. When developing your storefront, you select one active code version with which to work. All templates, pipelines, scripts, and images are taken from this active version, and it is also where your code is uploaded (check your <strong>dw.json</strong> file).</p>
+
+<p>So why is it useful to know about code versions?</p>
+
+<ul>
+    <li>You can roll back your storefront to a previous version if necessary and develop your application with a newer version while maintaining an active storefront on a stable code base.</li>
+    <li>When performing code replication, the process transfers code versions from staging to a development or production instance and activates them.</li>
+    <li>Sometimes, even if everything seems correct, your code changes are not reflected on your site. Switching to a different code version and then back is a known way to fix the problem when nothing else works.</li>
+</ul>
+
+<p><strong>Disable Site Caching</strong></p>
+
+<p>To see your code changes immediately on the site, you should disable site caching in your sandbox. This prevents the page cache from taking effect, so pages reflect the most recent code changes. In production instances, caching is enabled by default.</p>
+
+<p><strong>📝 Exercise: Disable Caching for an Empty Site or SFRATraining Site</strong></p>
+
+<ol>
+    <li>In Business Manager, select <strong>Administration → Sites → Manage Sites</strong>.</li>
+    <li>Select your site name.</li>
+    <li>Select the <strong>Cache</strong> tab.</li>
+    <li>Set the <strong>Time to Live</strong> value to 0 and uncheck the <strong>Enable Page Caching</strong> setting.</li>
+    <li>Click <strong>Apply</strong>.</li>
+    <li>You should invalidate the cache at this stage. You can invalidate the page cache fully or partially.</li>
+    <li>Check the status of the SFRATraining site.</li>
+</ol>
