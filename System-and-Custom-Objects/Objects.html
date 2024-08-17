@@ -1,0 +1,46 @@
+<h2>Objects</h2>
+
+<p>Have you ever wondered how Business Manager stores Products, Catalogs, or Categories? How does the API interact with these objects?</p>
+
+<p>Previously, you worked with Controllers and called classes from the SFCC API to retrieve data from Business Manager. The objects you manipulate are actually stored in Business Manager as tables.</p>
+
+<h3>System Objects</h3>
+
+<p>The first type of object that can be saved into Business Manager is called a System Object. You might wonder why they are called System Objects. The answer is simple: they come pre-configured out-of-the-box when you receive your sandbox.</p>
+
+<h4>System Object Types</h4>
+
+<p>Let's take a look at the system objects provided out-of-the-box:</p>
+<ul>
+    <li>Go to <strong>Administration > Development > System Objects Types</strong></li>
+</ul>
+
+<p>Do you recognize the items pointed to by the green arrows? They are some of the system objects we have been working with in previous chapters.</p>
+
+<h4>Check System Object Fields</h4>
+
+<ul>
+    <li>Go to <strong>Administration > Development > System Objects Types</strong></li>
+    <li>Click on the <strong>Product</strong> item</li>
+    <li>Click on the <strong>Attribute Definitions</strong> tab</li>
+    <li>At the bottom, click <strong>Show All</strong></li>
+</ul>
+
+<p>As you can see, the Product Object has almost 100 fields! But as you might recall, we did not see that many fields when editing products in earlier modules. So, what is going on?</p>
+
+<p>Although objects can have many fields, to avoid cluttering the screen, we can limit which fields are displayed when creating or editing an instance of that object. If you go back to check any Product, you will notice that not even half of the fields we just saw are listed there.</p>
+
+<h4>Check Which Fields Are Displayed in the Edit Page</h4>
+
+<ul>
+    <li>Go to <strong>Administration > Development > System Objects Types</strong></li>
+    <li>Click on the <strong>Product</strong> item</li>
+    <li>Click on the <strong>Attribute Grouping</strong> tab</li>
+    <li>Check the names in the <strong>Name</strong> column: In the <strong>Attributes</strong> column, you will see a number per row. That number indicates the number of fields inside that grouping.</li>
+    <li>Click on the number related to <strong>Search Engine Optimization Support</strong>: You will see four fields listed: Page Title, Page Description, Page Keywords, and Page URL.</li>
+    <li>Now, open any product and check if these same fields are listed under the <strong>Search Engine Optimization Support</strong> set.</li>
+</ul>
+
+<p>As you can see, this approach allows us to customize object pages to display the fields we want and hide those we consider unnecessary for the project.</p>
+
+<p>One last important detail: as mentioned at the beginning of this module, System Objects come pre-configured with your Business Manager. This means you cannot create new System Object Types. If you need a new type of object, you should explore Custom Objects.</p>
