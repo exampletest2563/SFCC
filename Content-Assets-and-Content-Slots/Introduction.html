@@ -1,0 +1,26 @@
+<h2>Content Assets and Content Slots</h2>
+
+<h3>Introduction</h3>
+
+<p>Content management is a crucial aspect when working on Salesforce Commerce Cloud (SFCC) projects. Key considerations include:</p>
+<ul>
+    <li>How to store content</li>
+    <li>Who creates and maintains this content</li>
+    <li>What types of content can be stored</li>
+</ul>
+
+<p>The amount and variety of content depend on the site. Some sites display simple text, while others feature a complex array of asset types. Sites may showcase information about how to use their products, profiles of customers wearing their products, and detailed explanations of techniques related to products, such as composting and mulching for a gardening site.</p>
+
+<p>The most common way to store and use this content is through content assets, organized into library folders for easier retrieval, and content slots.</p>
+
+<h3>Content Assets</h3>
+
+<p>In Commerce Cloud, a content asset is a database object with attributes. You can extend the object with its own attributes using the metadata system. The most common use for content assets is to contain HTML that displays on the storefront as a standalone page or embedded within another page.</p>
+
+<p>Content assets are typically used for information that changes infrequently, such as an "About Us" page or apparel sizing tables. These HTML blocks can reference images stored in a special area of the file system for content-related static files.</p>
+
+<p>However, it's worth mentioning that some Content Assets might only contain text. So, why use Content Assets instead of storing the text in Resource Bundle files (.properties)? By storing information in Content Assets, merchants can modify it as needed without requiring developer intervention.</p>
+
+<p>Therefore, the decision to store text in Content Assets or Resource Bundles sometimes depends on whether the merchant wants the ability to modify the content themselves.</p>
+
+<p>As a Commerce Cloud Software Developer, especially if you are a Frontend Developer, working with Content Assets will be part of your daily tasks. It is essential to understand how to manage and utilize them effectively.</p>
