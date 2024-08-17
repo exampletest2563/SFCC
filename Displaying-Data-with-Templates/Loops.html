@@ -1,0 +1,96 @@
+<h2>Loops</h2>
+
+<p>With the <code>&lt;isloop&gt;</code> tag, you can loop through the elements of a specified collection or array.</p>
+
+<p>For example, you can list data such as categories, products, shipping, and payment methods. You can even nest <code>&lt;isloop&gt;</code> statements (placing one inside another). You can use the following supporting tags with <code>&lt;isloop&gt;</code>:</p>
+
+<ul>
+    <li>Use the <code>&lt;isbreak&gt;</code> tag within a loop to terminate a loop unconditionally. If used in a nested loop, it terminates only the inner loop.</li>
+    <li>Use <code>&lt;isnext&gt;</code> to jump forward within a loop to the next list element of an iterator. This tag affects only the iterator of the inner loop. If an iterator has already reached its last element, or an iterator is empty when an <code>&lt;isnext&gt;</code> is processed, the loop is terminated instantly.</li>
+</ul>
+
+<p>The full syntax for using the <code>&lt;isloop&gt;</code> tag is:</p>
+
+<pre><code>&lt;isloop
+     iterator|items="&lt;expression&gt;" [ alias|var="&lt;var name&gt;" ]
+     [ status="&lt;var name&gt;" ] [ begin="&lt;expression&gt;" ] [ end="&lt;expression&gt;" ]
+     [ step="&lt;expression&gt;" ]&gt;
+          … do something in the loop using &lt;var_name&gt;…
+&lt;/isloop&gt;
+</code></pre>
+
+<p>The attributes have the following usage:</p>
+
+<table>
+    <thead>
+        <tr>
+            <th>Attribute</th>
+            <th>Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><code>items</code> (iterator)</td>
+            <td>The expression returning an object to iterate over. The attributes <code>iterator</code> and <code>items</code> can be used interchangeably.</td>
+        </tr>
+        <tr>
+            <td><code>var</code> (alias)</td>
+            <td>Name of the variable referencing the object in the iterative collection referenced in the current iteration.</td>
+        </tr>
+        <tr>
+            <td><code>status</code></td>
+            <td>Name of the variable referencing the loop status object. The loop status is used to query information such as the counter or whether it is the first item.</td>
+        </tr>
+        <tr>
+            <td><code>begin</code></td>
+            <td>The expression specifying a begin index for the loop. If <code>begin</code> is greater than 0, it skips the first x items and starts looping at the begin index. If <code>begin</code> is smaller than 0, it is skipped.</td>
+        </tr>
+        <tr>
+            <td><code>end</code></td>
+            <td>The expression specifying an end index (inclusive). If <code>end</code> is smaller than <code>begin</code>, it is skipped.</td>
+        </tr>
+        <tr>
+            <td><code>step</code></td>
+            <td>The expression specifying the step used to increase the index. If <code>step</code> is smaller than 1, 1 is used as the step value.</td>
+        </tr>
+    </tbody>
+</table>
+
+<p>For example, if the <code>&lt;isloop&gt;</code> tag declares a <code>status="loopstate"</code> variable, you can determine the first time the loop executes by using: <code>&lt;isif condition="${loopstate.first}"&gt;</code>. Another example of the <code>&lt;isloop&gt;</code> tag is:</p>
+
+<p>For the <code>status</code> variable, the following properties are accessible:</p>
+
+<table>
+    <thead>
+        <tr>
+            <th>Attribute</th>
+            <th>Description</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><code>count</code></td>
+            <td>The number of iterations, starting with 1.</td>
+        </tr>
+        <tr>
+            <td><code>index</code></td>
+            <td>The current index into the set of items while iterating.</td>
+        </tr>
+        <tr>
+            <td><code>first</code></td>
+            <td>True if this is the first item while iterating (<code>count == 1</code>).</td>
+        </tr>
+        <tr>
+            <td><code>last</code></td>
+            <td>True if this is the last item while iterating.</td>
+        </tr>
+        <tr>
+            <td><code>odd</code></td>
+            <td>True if the count is an odd value.</td>
+        </tr>
+        <tr>
+            <td><code>even</code></td>
+            <td>True if the count is an even value.</td>
+        </tr>
+    </tbody>
+</table>
