@@ -1,0 +1,29 @@
+<h2>ISML Expressions</h2>
+
+<p>ISML expressions are based on the Digital Script language. Since Digital Script implements the ECMAScript standard, access to variables, methods, and objects is the same as using JavaScript.</p>
+
+<p>ISML expressions are embedded inside <code>${…}</code> to enable the ISML processor to interpret the expression prior to executing an ISML tag or rendering the rest of the page.</p>
+
+<p>ISML expressions can also access Digital Script classes and methods. Two packages are available implicitly in ISML, so classes do not need to be fully qualified:</p>
+
+<ul>
+  <li><strong>TopLevel</strong> package: <code>session.getCustomer()</code></li>
+  <li><strong>dw.web</strong> package: <code>URLUtils.url()</code>, <code>URLUtils.webRoot()</code></li>
+</ul>
+
+<p>The <strong>TopLevel</strong> package has a class named <code>global</code>, which is implied and doesn’t need to be in the prefix. Other access to classes and methods must be fully qualified, such as <code>${dw.system.Site.getCurrent().getName()}</code>.</p>
+
+<p>Examples of ISML expressions:</p>
+
+<ul>
+  <li><code>${TopLevel.global.session.getCustomer().getProfile().getLastName()}</code><br>
+      Since the <strong>TopLevel</strong> package and <code>global</code> class are implicit, the previous code is equivalent to:<br>
+      <code>${session.getCustomer().getProfile().getLastName()}</code></li>
+  <li>You can replace the <code>get</code> method with properties. The previous code example is equivalent to:<br>
+      <code>${session.customer.profile.lastName}</code><br>
+      <code>${pdict.CurrentSession.customer.profile.lastName}</code><br>
+      <code>${pdict.CurrentCustomer.profile.lastName}</code><br>
+      <code>${dw.system.Site.getCurrent().getName()}</code><br>
+      <code>${dw.system.Site.current.name}</code></li>
+  <li>ISML expressions also allow complex arithmetical, boolean, and string operations: <code>${pdict.myProduct.getLongDescription() != null}</code></li>
+</ul>
