@@ -1,0 +1,16 @@
+<h2>What Are Scripts?</h2>
+
+<p>To avoid duplicating code across various parts of your application or overloading a single piece of logic, we can isolate these pieces of logic and store them in the <code>scripts</code> folder. This allows you to call these scripts from anywhere, whether on the backend or frontend.</p>
+
+<p>Using scripts makes maintenance much easier, enhances the readability of functions, and significantly reduces the risk of errors due to unnoticed code replication.</p>
+
+<p>Take a look at how the <code>scripts</code> folder is currently structured. Note that its organization might change as improvements are made to the repository.</p>
+
+<p>We won’t delve into the specifics of what each script does, but keeping in mind the principle that each function should do one thing, you should be able to use scripts effectively and add your own functions as needed.</p>
+
+<p>For good examples of how to structure and utilize scripts, consider reviewing the following files and observing how many times functions within these helper scripts are called:</p>
+
+<ul>
+    <li><code>app_storefront_base\cartridge\scripts\helpers\emailHelpers.js</code></li>
+    <li><code>app_storefront_base\cartridge\scripts\helpers\formatHelpers.js</code></li>
+</ul>
