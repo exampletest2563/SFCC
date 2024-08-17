@@ -1,0 +1,19 @@
+<h1>What are req, res, and next?</h1>
+
+<p>Before we move on, let's briefly explain these three parameters that are ALWAYS passed to our functions in controllers. Each step of the middleware chain is a function that takes three arguments: <code>req</code>, <code>res</code>, and <code>next</code>, in this specific order.</p>
+
+<ul>
+    <li><strong>req</strong> stands for <em>request</em>, and it contains information about the server request that initiated the call. It includes user input information and parses query string parameters, assigning them to the <code>req.querystring</code> object.</li>
+    <li><strong>res</strong> stands for <em>response</em>, and it contains functionality for outputting data back to the client.</li>
+    <li><strong>next</strong> notifies the server that you are done with a middleware step, so it can execute the next step in the chain.</li>
+</ul>
+
+<h1>Extending Your Controller</h1>
+
+<p>Now that you know how to structure your controller, let’s discuss a feature in SFRA that allows us to extend these controllers.</p>
+
+<p>When I mention "extend," you might wonder why we need a feature for that. Can’t we just modify the controllers’ code directly? If so, you should review the previous module where we explained why this approach can be problematic.</p>
+
+<p>Remember the <code>server</code> import we used for <code>get</code> and <code>post</code> endpoints? It turns out it has other functions we can use to extend existing functions.</p>
+
+<p>By "extending," we mean you can modify the behavior of a controller without altering the original file. To achieve this, you need to create a new cartridge and, within that cartridge, create a new controller.</p>
