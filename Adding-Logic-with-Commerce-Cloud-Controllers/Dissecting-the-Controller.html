@@ -1,0 +1,94 @@
+<h1>Dissecting the Controller</h1>
+
+<p>Now we will dissect this controller and understand all its parts. You will notice that all controllers follow a repeating pattern, and that is what we want you to understand right now. In general, controllers have the following structure:</p>
+
+<ul>
+    <li>General Imports</li>
+    <li>Endpoints
+        <ul>
+            <li>Route</li>
+            <li>Middlewares</li>
+            <li>Local Imports</li>
+            <li>Retrieve Request Parameters</li>
+            <li>Logic</li>
+            <li>Rendering</li>
+            <li>Middleware Chain</li>
+        </ul>
+    </li>
+    <li>Exports</li>
+</ul>
+
+<h2>Imports</h2>
+
+<p>This refers to the first lines of code in the controller where you can see one or many <code>require</code> clauses. These <code>requires</code> are there because they import files, classes, or functions that will be used by multiple functions in your controller.</p>
+
+<p>These files can come from various places, such as the Salesforce Commerce Cloud API itself, scripts from the scripts folder, models, and so on.</p>
+
+<p>For example, <code>var server = require("server");</code> is used in all your functions. As for <code>csrfProtection</code> and <code>consentTracking</code>, in the example below, you will see that they are used by some endpoints later on.</p>
+
+<h2>Endpoints</h2>
+
+<p>Take a look at the list of endpoints. Did you notice that all of them start with <code>server.&lt;something&gt;</code> and the first parameter is a string? These are the endpoints. They represent how you will call that endpoint whenever needed.</p>
+
+<p>The most common endpoints you will find are <code>get</code> and <code>post</code>, at least in the <code>app_storefront_base</code> cartridge. However, in the future, you might use other endpoints like <code>append</code>, <code>prepend</code>, <code>replace</code>, or <code>use</code>.</p>
+
+<p>These are the available endpoints for the current controller.</p>
+
+<h3>Route</h3>
+
+<p>Routes are defined in the first parameter of the endpoint and specify the string you will use to call the endpoint. By default, use PascalCase naming when defining the route for your endpoint.</p>
+
+<p>Different endpoints for the current SFCC controller are listed here.</p>
+
+<h3>Middlewares</h3>
+
+<p>This concept can sometimes be difficult to understand. If you have experience with Node.js, you probably know what they are and how to use them, so you can skip this section. If not, note that middleware functions are a great way to run code on each request, or on each request for a certain route, and to take action on request or response data. Middleware is a crucial piece of any modern web server and is incredibly useful.</p>
+
+<p>More information about middlewares can be found in this <a href="https://example.com">awesome article</a>.</p>
+
+<h3>Local Imports (Optional)</h3>
+
+<p>As you saw at the beginning of the file where we had a few <code>requires</code>, you will often see <code>requires</code> as the first lines of code in the body of the functions. You might wonder why the <code>requires</code> are inside the function instead of being placed together as global imports.</p>
+
+<p>It’s just so that you only require modules that are really needed for each context. Not all endpoints necessarily need to have a <code>require</code> clause. It really depends on what you want to do.</p>
+
+<h3>Retrieve Request Parameters (Optional)</h3>
+
+<p>When you create a function, your intention is usually to process values sent to it. For example, when you want to add a product to the cart or see the product detail page for a specific product, how will your function know which category or product you want to see if you don’t specify it?</p>
+
+<p>Take, for example, the scenario where you want to add a product to your cart or update the quantity of a product in your cart. Check the <code>UpdateQuantity</code> endpoint inside your <code>Cart.js</code> controller and see the first lines right after the local imports.</p>
+
+<p>Whenever you call a controller and pass a parameter, the parameter will usually be found in one of the following objects inside the request object:</p>
+
+<ul>
+    <li><code>querystring</code>: This object holds your parameters when your controller is called directly from a template.</li>
+    <li><code>form</code>: This object holds all the values submitted from a form directly into a controller.</li>
+    <li><code>others</code>: Often, a button click is intercepted by an event listener somewhere, which grabs your data, creates an object, and sends it to your controller via AJAX. In these cases, your parameters will be inside <code>req.&lt;name_of_the_object&gt;</code>, not <code>req.querystring</code>.</li>
+</ul>
+
+<h3>Logic</h3>
+
+<p>This is where you write all your logic, including communication with the API, transactions, conditionals, and so on.</p>
+
+<h3>Render a Template / Return Data</h3>
+
+<p>The response from your function will either:</p>
+
+<ul>
+    <li>Render a page (often sending data to it), or</li>
+    <li>Return JSON or XML data that will be used on the page.</li>
+</ul>
+
+<p>For example, you might render a template with custom data or send JSON as a controller result instead of rendering a template.</p>
+
+<h3>Middleware Chain</h3>
+
+<p>This is one of the simplest but most important parts of your function. It is represented by the always-present function call <code>next()</code>. When calling <code>next()</code>, you’re invoking the next function in the middleware chain to be executed.</p>
+
+<p>The only thing you might find confusing is the difference between <code>next()</code> and <code>return next()</code>. The latter stops middleware chain propagation.</p>
+
+<h3>Exports</h3>
+
+<p>This line of code is always the last one in your controller and makes all your endpoints visible to the external world so they can be called:</p>
+
+<pre><code>module.exports = server.exports();</code></pre>
