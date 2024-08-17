@@ -1,0 +1,16 @@
+<h2>ISML Template</h2>
+
+<p>Define an ISML template with the necessary tags for a valid HTML form: <code>&lt;form&gt;…&lt;/form&gt;</code></p>
+
+<p>You can implement your own form action by specifying a controller URL, but this would bypass the Forms framework.</p>
+
+<pre><code>&lt;form action="${URLUtils.url('&lt;Controller&gt;-&lt;Function&gt;')}" method="post"&gt;
+       ...
+&lt;/form&gt;</code></pre>
+
+<ul>
+    <li>The method <code>URLUtils.url('&lt;Controller&gt;-&lt;Function&gt;')</code> will call the specified controller and function when the submit button for the form is pressed.</li>
+    <li>Another method, <code>URLUtils.continueURL()</code>, ensures that the form is submitted back to the controller that displayed the form template.</li>
+    <li>SFRA uses the <code>input</code> tag for creating form fields.</li>
+    <li>Below is a snippet of the <code>addressForm.isml</code> template file. Pay attention to the form attributes such as <code>action</code> and <code>method</code>:</li>
+</ul>
