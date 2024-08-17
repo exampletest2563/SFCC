@@ -1,0 +1,15 @@
+<p>One concept that often causes confusion for beginners is the distinction between Point of Delivery (POD) and Realms.</p>
+
+<p>A Point of Delivery (POD) refers to a self-contained Salesforce Commerce Cloud hardware cluster that hosts numerous virtual customer instances in a multi-tier service environment. It includes multiple application servers, database servers, and the necessary clustering and backup infrastructure. Each POD is hosted in a third-party data center.</p>
+
+<p>Salesforce Commerce Cloud partitions PODs into realms. A realm includes segmentation for development, staging, and production for one or more storefronts.</p>
+
+<p>Every realm contains a Primary Instance Group (PIG), which includes three Commerce Cloud Digital instances:</p>
+
+<ul>
+    <li><strong>Production:</strong> This is the live instance used as the actual eCommerce storefront.</li>
+    <li><strong>Staging:</strong> Use this instance for configuration, data enrichment, data import, and code uploads to prepare it for testing in the Development instance. Through data replication, you can move data from the staging instance to either the development or production instance.</li>
+    <li><strong>Development:</strong> Developers use this instance to test processes without impacting the production storefront (e.g., product import feed).</li>
+</ul>
+
+<p>Every realm also includes a Secondary Instance Group (SIG), which has five sandboxes (though more can be accommodated). Developers use sandboxes to develop and test code. They are not as powerful as PIG instances in terms of performance, memory, and storage but have a smaller footprint.</p>
