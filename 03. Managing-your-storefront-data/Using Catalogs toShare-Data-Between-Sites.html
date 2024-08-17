@@ -1,0 +1,35 @@
+<h2>Using Catalogs to Share Data Between Sites</h2>
+
+<p>The RefArch import contains both site-specific data and data shared among all sites in the organization. The RefArch catalogs are available to the empty site you created earlier.</p>
+
+<p>There are two types of catalogs: 
+    <ul>
+        <li><strong>Master catalogs</strong> define all shared products of an organization.</li>
+        <li><strong>Site catalogs</strong> specify category navigation and products for a particular site. Therefore, a site can have only one site catalog.</li>
+    </ul>
+</p>
+
+<p>A site can have one or more master catalogs. Because multiple sites can share a master catalog, you can specify some attributes at the site level. For example, using the <strong>OnlineFlag</strong> attribute enables a product to be online in one site but offline in another.</p>
+
+<p><strong>📝 Exercise: Share a Catalog Between Sites and Set a Product Offline</strong></p>
+
+<ol>
+    <li>In Business Manager, select <strong>RefArch → Products and Catalogs → Catalogs</strong>.</li>
+    <li>Open <strong>storefront-catalog-m-en</strong>.</li>
+    <li>Click on it or on the <strong>Edit</strong> link related to it.</li>
+    <li>To share this catalog with the Training site:
+        <ul>
+            <li>Select the <strong>Site Assignments</strong> tab.</li>
+            <li>Check the <strong>Training</strong> site.</li>
+            <li>Click <strong>Apply</strong>.</li>
+        </ul>
+    </li>
+    <li>Select <strong>Training → Search → Search Indexes</strong>.</li>
+    <li>Check the top index box to select all indexes.</li>
+    <li>Click <strong>Rebuild</strong>. This ensures that indexing occurs automatically after any changes that require it.</li>
+    <li>Select <strong>Training → Products and Catalogs → Products</strong>.</li>
+    <li>Find the <strong>P0048</strong> product.</li>
+    <li>Lock the product for editing.</li>
+    <li>Locate the <strong>Online/Offline</strong> site attribute. Set the <strong>Online</strong> field to <strong>No</strong> for the Training site only.</li>
+    <li>Apply your changes and verify that the product is not available on the Training site. (Go to RefArch and search for P0048).</li>
+</ol>
