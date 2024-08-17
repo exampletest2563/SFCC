@@ -1,0 +1,9 @@
+<h2>Resource Bundle</h2>
+
+<p>By default, all labels, messages, and titles used in your forms should be added to the <code>cartridge/cartridge/templates/resources/forms.properties</code> file.</p>
+
+<h2>route:beforeComplete Event</h2>
+
+<p>The callback function for the <code>route:beforeComplete</code> event is executed before middleware completion. According to the official Salesforce Commerce Cloud documentation, “The <code>route:beforeComplete</code> event is used to store form data. Different APIs are used to save data, depending on the type of form.”</p>
+
+<p>In practice, using this event is not mandatory. However, it is useful to know that it is an option if you have a specific situation where you need to save form data, and you expect the endpoint to be extended. You must ensure that your logic for saving the form data will be the last part to be executed.</p>
