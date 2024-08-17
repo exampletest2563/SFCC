@@ -1,0 +1,18 @@
+<h2>Reusing Page Layouts</h2>
+
+<p>One very useful feature that ISML offers is the ability to create page layouts and reuse these layouts on any pages. This helps avoid creating pages from scratch every time.</p>
+
+<p>Additionally, it simplifies maintenance. If you need to update something on the page, including SCSS or JavaScript imports, you only need to modify the page layout being used. The changes will automatically be reflected on all pages that use that layout.</p>
+
+<p>To create and use these page layouts, we use a special type of template called a <strong>decorator template</strong>. You can apply a decorator template using the <code>&lt;isdecorate&gt;</code> tag.</p>
+
+<p>These files are stored in a specific folder: <code>app_storefront_base/cartridge/templates/default/common/layout</code>.</p>
+
+<p>The decorator template uses the <code>&lt;isreplace&gt;</code> tag to specify where the content should be replaced by the decorated content. The following example illustrates a decorator and the area where the content is replaced by whatever template uses the decorator:</p>
+
+<p>A typical use case is decorating the content body with a header and footer. See the <code>app_storefront_base/cartridge/templates/default/common/layout/page.isml</code> file for an example.</p>
+
+<p>Typically, the decorator template uses only one tag, <code>&lt;isreplace&gt;</code>. However, you can use multiple tags. If the decorator template contains multiple <code>&lt;isreplace&gt;</code> tags, the content to be decorated will be included for each <code>&lt;isreplace&gt;</code> tag.</p>
+
+<p>Here is an example where the homepage uses a decorator:</p>
+<pre><code>&lt;isdecorate template="common/layout/page" /&gt;</code></pre>
