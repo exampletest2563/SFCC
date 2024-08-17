@@ -1,0 +1,27 @@
+<h2>Resource Bundles</h2>
+
+<p>In storefront code, we should avoid hard-coding text strings. Titles, labels, messages, buttons, and field names should all be externalized using resource bundles (also known as properties files).</p>
+
+<p>If you do not want to duplicate ISML templates to create locale-specific versions, you can use resource bundles to keep your templates generic and reusable.</p>
+
+<p>A resource bundle is a file with a <code>.properties</code> extension that contains the hard-coded strings to be used in ISML templates. In SFRA, bundles are typically named based on the functional area where the strings are used, but you can use any file name and organization you prefer.</p>
+
+<p>By default, resource bundles are located at <code>&lt;cartridge_name&gt;/cartridge/templates/resources</code>.</p>
+
+<p>Resource bundles contain key-value pairs, where the key might be compound (e.g., <code>key.subkey</code>) and the value is a hard-coded string that uses Java MessageFormat syntax for parameter replacement.</p>
+
+<p>Strings from the bundles are accessible to all ISML templates through two methods from the API:</p>
+<ul>
+    <li><code>Resource.msg</code>: Use this method when you only need to retrieve a value.</li>
+    <li><code>Resource.msgf</code>: Use this method when you need to retrieve a value and pass a parameter that will replace a placeholder (e.g., <code>{0}</code>) in the string.</li>
+</ul>
+
+<p>More information can be found <a href="URL_TO_MORE_INFO">here</a>.</p>
+
+<p>Here are some examples of how to define these key-value pairs and use them:</p>
+
+<p>Notice that some values contain placeholders like <code>{0}</code> and <code>{1}</code>. These are placeholders that will be dynamically replaced by parameters you pass when using <code>Resource.msgf</code>.</p>
+
+<p>After the third parameter, you can pass any number of values you want. Inside the resource bundle, they will be identified by <code>{}</code>, starting from <code>0</code> and incrementing by <code>1</code> for each additional parameter you pass.</p>
+
+<p>This is the main difference between the two methods: one retrieves hard-coded strings that don’t accept parameters, while the other accepts parameters.</p>
