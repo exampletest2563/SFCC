@@ -1,0 +1,50 @@
+<h3>Types of Content</h3>
+
+<p>Now let’s examine the field named <strong>Body</strong> at the bottom:</p>
+
+<p>The first thing you’ll notice is that it is HTML! This allows for extensive customization in content assets. However, not all merchants will know HTML. Fortunately, you can also use plain text and include media. Click on the <strong>HTML Editor</strong> link. A popup will appear:</p>
+
+<p>Notice that no HTML is displayed in the popup. This is because the content in the <strong>Body</strong> field shows the raw content created from this HTML Editor. In the popup, you can perform various tasks such as creating tables, adding images (the icon resembling a country flag), and more. After clicking <strong>OK</strong>, the correct HTML will be generated back into the field.</p>
+
+<p>This means that merchants don’t need to know HTML unless specific customization is required, such as changing a CSS class or modifying HTML tags.</p>
+
+<p>Finally, pay attention to the <strong>Rendering Template</strong> field. This field is useful if you need to create unique pages with an alternative header, footer, and decorator.</p>
+
+<h3>Exercise: Create and Configure a Content Asset</h3>
+
+<ol>
+    <li>In Business Manager, select <strong>Site</strong> > <strong>RefArchGlobal</strong> > <strong>Merchant Tools</strong> > <strong>Content</strong> > <strong>Content Assets</strong>.</li>
+    <li>Click on the <strong>New</strong> button.</li>
+    <li>Provide an ID: <code>salesforceb2c_certification_questions_com</code>.</li>
+    <li>Provide a Name: <code>Salesforce B2C Certification Questions</code>.</li>
+    <li>Set the value <strong>Yes</strong> for the <strong>Online</strong> flag.</li>
+    <li>In the <strong>Body</strong> attribute, click on the <strong>HTML Editor</strong> link.</li>
+    <li>In the new window that appears, click the icon resembling a country flag to upload an image.
+        <ul>
+            <li>In the new pop-up window, click the <strong>Browse Server</strong> button.</li>
+            <li>In the new pop-up window, in the <strong>Files</strong> section, click the <strong>Choose File</strong> button and select an image of your choice.</li>
+            <li>Once the upload is complete, click on the file's name to select it.</li>
+            <li>When the pop-up closes, click the <strong>OK</strong> button.</li>
+            <li>Try resizing your image to make it smaller.</li>
+        </ul>
+    </li>
+    <li>Finally, add the following text to the body: <code>This is my 1st content asset's body.</code></li>
+    <li>Click the <strong>OK</strong> button.</li>
+    <li>Click the <strong>Apply</strong> button to save your Content Asset.</li>
+</ol>
+
+<h3>Exercise: Create and Configure Another Content Asset</h3>
+
+<ol>
+    <li>Repeat the same steps as above to create another content asset but use the following text in the body: <code>I'm learning Salesforce Commerce Cloud!</code></li>
+</ol>
+
+<h3>Exercise: Rendering a Content Asset</h3>
+
+<ol>
+    <li>Open the ISML template <code>app_storefront_base\cartridge\templates\default\search\productGrid.isml</code>.</li>
+    <li>On line 2, right after the <code>&lt;isinclude&gt;</code> tag, call your content asset: <code>&lt;iscontentasset aid="salesforceb2c_certification_questions_com"/&gt;</code></li>
+    <li>Also, at the top of the page, add the following code: <code>&lt;isinclude template="/components/modules" sf-toolkit="off" /&gt;</code></li>
+    <li>Now go to your storefront and perform a search for the term <code>Suit</code>.</li>
+    <li>Your Content Asset should be displayed at the top of the product result page.</li>
+</ol>
