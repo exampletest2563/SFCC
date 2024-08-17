@@ -1,0 +1,22 @@
+<h2>Conditional Statements</h2>
+
+<p>Most programming languages use the keywords <code>if</code>, <code>else if</code>, and <code>else</code> for conditional statements. Commerce Cloud Digital uses similar keywords but adds the <code>is</code> prefix to the beginning of the syntax:</p>
+
+<pre><code>&lt;isif condition="${ISML expression evaluated}"&gt;
+    Do something here if true.
+&lt;/isif&gt;
+
+&lt;iselseif condition="${check another condition}"&gt;
+    Do something if this one is true.
+&lt;/iselseif&gt;
+
+&lt;iselse&gt;
+    If none of the above conditions are true, do this.
+&lt;/iselse&gt;
+</code></pre>
+
+<p>To use a conditional statement in an ISML template:</p>
+<ol>
+    <li>Determine the location on your ISML page where you want to write your conditional statement.</li>
+    <li>Open your conditional statement with the <code>&lt;isif condition=""&gt;</code> tag. Example:</li>
+</ol>
