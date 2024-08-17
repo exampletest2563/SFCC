@@ -1,0 +1,95 @@
+<h2>API Packages</h2>
+
+<p>The Digital Script API is organized into packages, similar to Java. However, unlike Java, inheritance is not possible from these classes or packages when creating a script. You can only use the properties and methods of these classes in your scripts.</p>
+
+<p>The <code>TopLevel</code> package is the default package in this API. It is similar to <code>java.lang</code> in Java and does not need to be imported into scripts. It provides standard ECMAScript classes and extensions, such as <code>Error</code>, <code>Date</code>, <code>Function</code>, <code>String</code>, <code>Math</code>, <code>Number</code>, and <code>XML</code>.</p>
+
+<p>The <code>TopLevel.global</code> class contains many common constants and properties used in scripts. Some of these properties include <code>customer</code>, <code>request</code>, and <code>session</code>.</p>
+
+<p>In these packages, there are many classes ending with <code>Mgr</code>. These classes, such as <code>dw.catalog.ProductMgr</code>, retrieve instances of business objects related to the package they belong to. For example, use <code>ProductMgr.getProduct(String id)</code> to get a product using a unique identifier. The method returns a <code>Product</code> instance, which you can use to find information about the product. This pattern is repeated for all managers.</p>
+
+<p>The table below describes some of these packages. You don’t need to remember everything; use it as a reference for future needs:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>eCommerce API Packages</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>dw.campaign</td>
+      <td>For campaign and promotions.<br>Classes: PromotionMgr, Campaign, Promotion, SourceCodeGroup, etc.</td>
+    </tr>
+    <tr>
+      <td>dw.catalog</td>
+      <td>For catalog, product, and price book.<br>Classes: CatalogMgr, Category, Product, Recommendation, PriceBook, etc.</td>
+    </tr>
+    <tr>
+      <td>dw.content</td>
+      <td>For non-product content management.<br>Classes: ContentMgr, Content, Folder, Library, etc.</td>
+    </tr>
+    <tr>
+      <td>dw.customer</td>
+      <td>For customer profile and account.<br>Classes: CustomerMgr, Customer, Profile, ProductList, OrderHistory, etc.</td>
+    </tr>
+    <tr>
+      <td>dw.order</td>
+      <td>For orders, including basket, coupons, line items, payment, shipment.<br>Classes: Basket, Order, ProductLineItem, ShippingMgr, TaxMgr, etc.</td>
+    </tr>
+  </tbody>
+</table>
+
+<table>
+  <thead>
+    <tr>
+      <th>Generic API Packages</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>dw.crypto</td>
+      <td>Encryption services using JCA; DES, Triple-DES, AES, RSA, etc.<br>Classes: Cipher, MessageDigest</td>
+    </tr>
+    <tr>
+      <td>dw.io</td>
+      <td>Input and output.<br>Classes: File, FileReader, CSVStreamReader, XMLStreamReader, etc.</td>
+    </tr>
+    <tr>
+      <td>dw.object</td>
+      <td>System base classes and custom objects.<br>Classes: PersistentObject, ExtensibleObject, CustomObjectMgr, etc.</td>
+    </tr>
+    <tr>
+      <td>dw.rpc</td>
+      <td>Web services related APIs.<br>Classes: WebReference, Stub</td>
+    </tr>
+    <tr>
+      <td>dw.system</td>
+      <td>System functions.<br>Classes: Site, Request, Session, Logger</td>
+    </tr>
+    <tr>
+      <td>dw.util</td>
+      <td>Similar to the java.util API: collections, maps, and calendar classes.</td>
+    </tr>
+    <tr>
+      <td>dw.value</td>
+      <td>Immutable value objects.<br>Classes: Money, Quantity</td>
+    </tr>
+    <tr>
+      <td>dw.web</td>
+      <td>Web processing.<br>Classes: URLUtils, Forms, Cookie, HttpParameterMap, etc.</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>You can also embed SFCC Script API calls into ISML by using the <code>&lt;isset&gt;</code> tag:</p>
+
+<p>Inside the <code>&lt;isscript&gt;</code> tag, you can fully qualify every class you want to use or import any packages at the top of the script:</p>
+
+<p>Be aware that adding logic inside ISML templates is <strong>NOT RECOMMENDED</strong>, so use it with moderation. Instead, always try to add any logic in the Controller.</p>
+
+<h3>📝 Exercise: Using Customer API</h3>
+
+<p>Create a Controller that requires the necessary customer Digital Script API and sends information to a new <code>template.isml</code> to indicate whether the current customer is authenticated or not.</p>
