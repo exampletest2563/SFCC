@@ -1,0 +1,38 @@
+<h2>Getting Data with Models and Sending Data with ViewModels</h2>
+
+<h3>Introduction</h3>
+
+<p>We’ve discussed Controllers, Templates, and briefly mentioned ViewModels without many details. Now, we will explore the differences between models and view models and why the SFRA architecture uses view models.</p>
+
+<p>It would be beneficial to have some previous experience with the MVC pattern before diving deeper. If you’re not familiar with it, consider reviewing this <a href="https://example.com/mvc-pattern" target="_blank">link</a> before continuing.</p>
+
+<p>In essence, MVC is similar to MVCVM (Model-View-Controller-ViewModel), but with an additional layer called ViewModel (VM).</p>
+
+<p>In pure MVC, Models typically represent our database tables. They are defined once and usually correspond to a table in the database. However, models can have numerous fields.</p>
+
+<p>What are the chances you need all of them on a single page? Sending unused data increases page loading times. Instead, we use ViewModels.</p>
+
+<p>To put it simply, ViewModels are objects created specifically for the pages we want to render, containing only the data that particular page requires.</p>
+
+<p>Here’s the process:</p>
+<ul>
+    <li>Our Controller retrieves data from the API (Models).</li>
+    <li>It creates a ViewModel object (essentially a hashmap with key-value pairs).</li>
+    <li>It sends this ViewModel to the storefront (View).</li>
+</ul>
+
+<h3>Models</h3>
+
+<p>As mentioned earlier, Models usually represent our database tables. In SFCC, you’ll notice we have two levels of Models:</p>
+<ul>
+    <li>Models returned by the SFCC API. These include Mgr classes used to retrieve data from our API.</li>
+    <li>Customizable models that we have access to and can extend.</li>
+</ul>
+
+<p>For a better understanding, let’s focus on <code>CartModel</code> and the <code>Cart Controller</code>.</p>
+
+<p>Notice that the CartModel receives the actual Basket as a parameter and adds more data when creating the model. To confirm that this is indeed the Basket returned from the API, let’s check the Cart Controller that renders the Cart page:</p>
+
+<p>In this scenario, our Model and ViewModel are the same, as confirmed. The advantage of having these models is that we can extend them according to our needs. For example, if we need additional data, we can modify the model to include it. This way, whenever we call it, the data will be available.</p>
+
+<p>However, keep in mind that this approach might not always be the best. If you need extra data only for a specific call, using <code>getViewData</code> and <code>setViewData</code> inside your controller might be a better solution.</p>
