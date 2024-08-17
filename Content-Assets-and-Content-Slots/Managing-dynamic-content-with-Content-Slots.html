@@ -1,0 +1,100 @@
+<h3>Managing Dynamic Content with Content Slots</h3>
+
+<p>A content slot is an area on the page where a merchant defines the content to display based on certain qualifiers or rules. In Salesforce Commerce Cloud, a content slot, like a content asset, is a database object with attributes. You can extend the object with its own attributes using the metadata system.</p>
+
+<p>Content slots are used for information that changes from time to time, such as promotional banners. They can display different types of content:</p>
+<ul>
+    <li>One or many products selected by the merchant</li>
+    <li>Category attributes (images or other visual elements)</li>
+    <li>Content assets from the content library</li>
+    <li>Static HTML and images from the static library</li>
+</ul>
+
+<p>To view a content slot, use the Storefront Toolkit > Content Information tool. Hover your mouse pointer around the page to reveal where content slots exist and to access a link to the slot’s configuration page in Business Manager.</p>
+
+<p>There are several types of content slots:</p>
+<ul>
+    <li><strong>Global slots:</strong> Can appear on any page.</li>
+    <li><strong>Category slots:</strong> Appear on category-specific pages since they depend on the category ID.</li>
+    <li><strong>Folder slots:</strong> Appear in content library folders based on the folder ID.</li>
+</ul>
+
+<p>Content slots are driven by various rules such as marketing campaigns, ranks, A/B tests, and customer groups.</p>
+
+<h3>Content Slots vs. Content Assets</h3>
+
+<p>Slots can be controlled by campaigns with qualifiers such as start/end dates, customer groups, source codes, coupons, and rank. In contrast, content assets are reusable elements without qualifiers, used for non-product-related information such as customer support pages, special sales, size charts, and gardening tips.</p>
+
+<p>Content slots and content assets are managed in different areas within the Business Manager:</p>
+<ul>
+    <li><strong>Content Slots:</strong> Managed under <strong>Site > Online Marketing > Content Slots</strong></li>
+    <li><strong>Content Assets:</strong> Managed under <strong>Site > Content > Content Assets</strong></li>
+</ul>
+
+<h3>Creating & Configuring Content Slots</h3>
+
+<p>Creating a content slot requires collaboration:</p>
+<ol>
+    <li>The developer inserts an <code>&lt;isslot&gt;</code> tag in a template at the location where the slot will appear.</li>
+    <li>The developer creates a rendering template for the slot to define how the slot data is presented.</li>
+    <li>The merchant creates a configuration for the slot in the Business Manager.</li>
+</ol>
+
+<h4>Creating Content Slots - Developer Tasks</h4>
+
+<p>To register a content slot in Business Manager, use the <code>&lt;isslot&gt;</code> tag inside a template. Place the tag exactly where the slot should appear on the page. Examples of tag usage include:</p>
+
+<pre><code>&lt;isslot id="header_banner" description="..." context="global"/&gt;
+&lt;isslot id="category_top_featured" context="category" description="..." context-object="${pdict.ProductSearchResult.category}"/&gt;
+&lt;isslot id="fldr-landing-slotbanner" context="folder" description="Large Folder Landing Banner" context-object="${pdict.ContentSearchResult.folder}"/&gt;</code></pre>
+
+<p>Whenever the template is saved, the new content slot automatically appears in the list of slots under <strong>Site > Online Marketing > Content Slots</strong> because Commerce Cloud Digital scans for <code>&lt;isslot&gt;</code> tags.</p>
+
+<h4>Creating the Slot Rendering Template - Developer Tasks</h4>
+
+<p>The rendering template must account for the type of content, the number of objects to display, and any required CSS styling. For example, the <code>header_banner-m</code> slot uses the <code>htmlSlotContainer.isml</code> template:</p>
+
+<pre><code>&lt;div class="html-slot-container"&gt;
+   &lt;isif condition="${slotcontent != null}"&gt;
+      &lt;isloop items="${slotcontent.content}" var="markupText"&gt;
+         &lt;isprint value="${markupText.markup}" encoding="off"/&gt;
+       &lt;/isloop&gt;
+   &lt;/isif&gt;
+&lt;/div&gt;</code></pre>
+
+<p>The <code>slotcontent</code> constant provides configuration information to the rendering template. The template code should check that <code>slotcontent</code> is not empty and use <code>isprint</code> to display the content:</p>
+
+<pre><code>&lt;isif condition="${slotcontent != null}"&gt;
+   &lt;!-- Then it loops through the slotcontent.content (the content provided for the slot): --&gt;
+   &lt;isloop items="${slotcontent.content}" var="markupText"&gt;
+      &lt;!-- Inside the loop, the code uses the <code>&lt;isprint&gt;</code> tag: --&gt;
+      &lt;isprint value="${markupText.markup}" encoding="off"/&gt;
+   &lt;/isloop&gt;
+&lt;/isif&gt;</code></pre>
+
+<h4>Creating Content Slot Configurations - Merchant Tasks</h4>
+
+<p>Merchants create content slot configurations by navigating to <strong>Site > Online Marketing > Content Slots</strong> and selecting the specific slot created by the developer (e.g., <code>header-banner</code>).</p>
+
+<p>The merchant can choose an existing configuration or create a new one. They then select the type of content, which could be:</p>
+<ul>
+    <li><strong>Product:</strong> Enter product IDs and choose a template designed for products.</li>
+    <li><strong>HTML:</strong> Enter HTML content and choose a template designed for HTML.</li>
+    <li><strong>Content Assets:</strong> Enter Content Asset IDs and choose a template designed for content assets.</li>
+    <li><strong>Categories:</strong> Enter category IDs and choose a template designed for categories.</li>
+</ul>
+
+<p>The Template menu contains rendering templates available in all cartridges in the cartridge path for the content type. The RefArchGlobal app_storefront_base cartridge includes default templates for each content type, located in specially named folders (e.g., <code>slots/html</code> for HTML).</p>
+
+<p>The merchant can reuse an existing template or use a new one as directed by the developer. Collaboration is crucial because without a rendering template, the slot cannot be visualized.</p>
+
+<h4>Using Content Link Functions</h4>
+
+<p>Salesforce Commerce Cloud utilizes HTML attributes in many places. Avoid hardcoding hyperlinks in attributes of type HTML. Instead, use Content Link Functions to create links:</p>
+<ul>
+    <li><code>$staticlink$</code>: Creates a static link to an image.</li>
+    <li><code>$url()</code>: Creates an absolute URL that retains the protocol of the outer request.</li>
+    <li><code>$httpUrl()</code>: Creates an absolute URL with the http protocol.</li>
+    <li><code>$httpsUrl()</code>: Creates an absolute URL with the https protocol.</li>
+    <li><code>$include()</code>: Makes a remote include call (relevant for caching purposes).</li>
+</ul>
