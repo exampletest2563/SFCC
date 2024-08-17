@@ -1,0 +1,25 @@
+<h1>Debugging Controllers</h1>
+
+<p>One of the most important tools a developer should have is a debugger. It simplifies your workflow by allowing you to pause the execution of your code at specific lines, analyze variable values, and execute your code line by line to ensure it performs as intended.</p>
+
+<p>The Prophet extension in Visual Studio Code not only allows us to sync our code with the sandbox but also provides debugging features. To use it, follow these steps:</p>
+
+<ol>
+    <li>Open any controller file and click on the left side of the line number where you have code. A red dot will appear, indicating that a breakpoint is set. If the function is called, execution will pause at this line when the debugger is running.</li>
+    <li>On the left panel, click on the bug icon.</li>
+    <li>If you haven’t created a debug configuration before, you will see three options: <strong>Debug with Node.js</strong>, <strong>Run with Node.js</strong>, and <strong>Create a launch.json file</strong>. Choose to create the JSON file.</li>
+    <li>It will generate a file named <code>launch.json</code> inside a folder named <code>.vscode</code>. Delete its content and replace it with the following:</li>
+</ol>
+
+<pre><code>{
+    "version": "0.1.0",
+    "configurations": [
+        {
+            "type": "prophet",
+            "request": "launch",
+            "name": "Attach to Sandbox"
+        }
+    ]
+}</code></pre>
+
+<p>To start debugging, click the play button on the left side of the dropdown list.</p>
