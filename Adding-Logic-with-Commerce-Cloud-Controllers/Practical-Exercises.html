@@ -1,0 +1,58 @@
+<h1>Practical Exercises</h1>
+
+<p>First, ensure that you have added your new cartridge to the path of your site. Otherwise, these exercises won’t work because your controller will not be found.</p>
+
+<h2>📝 Exercise: Create a New Controller and Call It</h2>
+
+<ol>
+    <li>Create a new Controller file named <code>Training.js</code> in your new cartridge.</li>
+    <li>Create the default structure as described in the section <strong>Specify the Controller being Extended</strong>, subsection <strong>Same Name</strong>.</li>
+    <li>Create a new GET endpoint with the Route <code>"HelloWorld"</code>.</li>
+    <li>Inside your new cartridge, create the following folder structure: <code>cartridge/templates/default/training</code>, and create a file named <code>myfirsttemplate.isml</code>.</li>
+    <li>Add <code>next()</code> as the last line in the controller.</li>
+    <li>Add a breakpoint to this line.</li>
+    <li>Start your debugger.</li>
+    <li>Navigate to your storefront and add <code>/default/Training-HelloWorld</code> to the end of your site’s URL.</li>
+</ol>
+
+<p>If everything is set up correctly, you should see your Visual Studio Code icon on the taskbar blinking, indicating that the debugger has paused execution at the breakpoint. Additionally, your site might load indefinitely while the debugger is active.</p>
+
+<h2>📝 Exercise: Sending Data to a Page</h2>
+
+<p>In this exercise, you will create a template to display your data. Don’t worry, there will be a whole module dedicated to templates later on.</p>
+
+<ol>
+    <li>Open your <code>Training.js</code> controller.</li>
+    <li>Ensure the folder structure <code>cartridge/templates/default/training</code> exists in your cartridge (create it if necessary).</li>
+    <li>In the folder <code>cartridge/templates/default/training</code>, create a file named <code>myfirsttemplate.isml</code> (create it if necessary).</li>
+    <li>Add the following code to <code>myfirsttemplate.isml</code>: <code>${pdict.myvariable}</code>.</li>
+    <li>Update your HelloWorld endpoint to send a variable to this template. Ensure the code looks like this:</li>
+</ol>
+
+<pre><code>server.get('HelloWorld', function (req, res, next) {
+    res.setViewData({
+        myvariable: 'Just a string'
+    });
+    res.render('training/myfirsttemplate');
+    next();
+});
+</code></pre>
+
+<p>Now call your controller again from the browser. You should see the string “Just a string” displayed.</p>
+
+<p>When <code>res.render</code> is called, it looks for files directly inside <code>templates/default</code>. Therefore, there is no need to include the path to the ISML template in the function call. Also, you don’t need to append <code>.isml</code> to the filename when rendering it.</p>
+
+<h2>📝 Exercise: Appending to an Existing Controller</h2>
+
+<p>To verify your understanding, you will add logic to an existing controller and include new data for the page.</p>
+
+<ol>
+    <li>Create a new Controller named <code>Cart.js</code> in your new cartridge if it does not already exist.</li>
+    <li>Extend the <code>Show</code> endpoint and add a string variable to be sent to the rendered page.</li>
+    <li>Use <code>res.getViewData()</code> and <code>res.setViewData()</code> to retrieve and add the new variable to the ViewData object.</li>
+    <li>Open the original <code>Cart.js</code> inside <code>app_storefront_base</code> and identify which template is rendered by the <code>Show</code> endpoint.</li>
+    <li>Replicate the folder structure and copy that template into your new cartridge.</li>
+    <li>Add code to print your variable at the last line, right before the <code>&lt;/isdecorate&gt;</code> tag in the copied template.</li>
+</ol>
+
+<p>Visit your storefront and click on the cart icon in the top-right corner. On the rendered cart page, check if your string is displayed correctly.</p>
