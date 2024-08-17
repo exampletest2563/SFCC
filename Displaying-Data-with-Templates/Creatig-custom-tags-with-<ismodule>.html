@@ -1,0 +1,9 @@
+<h2>Creating Custom Tags with <code>&lt;ismodule&gt;</code></h2>
+
+<p>There are three key ISML files required for creating and using a custom tag:</p>
+
+<ol>
+    <li>The ISML file that sets the values of any attributes for the custom tag (e.g., <code>modules.isml</code>).</li>
+    <li>The template attribute specifies the ISML file that defines what happens when the attributes are passed. For example, see the contents of <code>app_storefront_base/cartridge/templates/default/components/content/contentAsset.isml</code>.</li>
+    <li>Invoke the custom tag inside an ISML template, such as <code>pageFooter.isml</code>.</li>
+</ol>
