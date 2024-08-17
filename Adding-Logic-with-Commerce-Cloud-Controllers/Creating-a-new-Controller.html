@@ -1,0 +1,45 @@
+<h1>Creating a New Controller</h1>
+
+<p>Let's suppose you want to extend the <code>Cart.js</code> controller to add some extra logic. The specifics of the logic don't matter for this example.</p>
+
+<p>First, create a new cartridge, or use the one you created in the previous module. Once the cartridge is created, replicate the folder structure found in the <code>app_storefront_base</code> cartridge, and create your controller in the correct folder with the basic code that all controllers need.</p>
+
+<h2>Specify the Controller Being Extended</h2>
+
+<p>The next step is to specify the controller you want to extend. There are two methods to achieve this, depending on whether your controller file has the same name as the one you want to modify:</p>
+
+<ul>
+    <li><strong>Same Name:</strong> If you named your controller the same as the original file, use <code>superModule</code> to inform the framework that you are extending a controller with the same name. Example: <code>server.extend(module.superModule);</code></li>
+    <li><strong>Different Name:</strong> If your controller has a different name from the original file, inform the framework by importing the original controller. Use the full path in the import statement. Example: <code>server.extend(require('app_storefront_base/cartridge/controllers/Cart'));</code></li>
+</ul>
+
+<h2>Types of Extension</h2>
+
+<p>The SFRA server module provides several methods for extending a controller. You can add extra logic:</p>
+
+<ul>
+    <li><strong>Before the Beginning of Your Function:</strong> Use <code>server.prepend</code> to add logic at the start of your function. Your code will run as the first line of code in the function.</li>
+    <li><strong>At the End of the Function:</strong> Use <code>server.append</code> to add logic at the end of your function. Your code will run right after the <code>next()</code> function call.</li>
+    <li><strong>At the End of the Middleware Chain:</strong> Use <code>this.on("route:BeforeComplete")</code> to add functionality at the end of the function after the entire middleware chain. This special case will be discussed further when we cover the Forms Framework.</li>
+    <li><strong>Replace the Entire Function:</strong> Use <code>server.replace</code> when you need to change the behavior of the existing code, rather than just adding logic. For example, if you need to optimize the function or remove parts of the code due to changing requirements, you should use <code>server.replace</code>.</li>
+</ul>
+
+<h2>Examples</h2>
+
+<p><strong>server.append:</strong> When you need to add extra logic at the end of your function, use the <code>append</code> method. Your code will run right after the <code>next()</code> function call.</p>
+
+<p><strong>server.prepend:</strong> When you need to add extra logic at the beginning of your function, use the <code>prepend</code> method. Your code will run as the first line of the function.</p>
+
+<p><strong>server.replace:</strong> When adding extra logic at the beginning or end of the function is insufficient and you need to completely change the behavior of the existing code, use <code>server.replace</code>. This is useful for optimizing or rewriting code when requirements change.</p>
+
+<p><strong>this.on("route:BeforeComplete"):</strong> This method adds extra functionality to the end of your function without using <code>server.append</code>. Open your <code>Cart.js</code> controller and check the end of the <code>GetProduct</code> endpoint. Everything inside this function will be executed at the end of the middleware chain. Remember, you are in a different scope, so you don’t have access to variables outside this function. Use <code>setViewData</code> outside the function and <code>getViewData</code> inside this function to manage data.</p>
+
+<h2>ViewData</h2>
+
+<p>One of the most important things to know when extending controllers is how to retrieve the contents of the response object.</p>
+
+<p>When we discussed rendering pages or returning JSON objects, we mentioned sending data to the page. This data is managed using the <code>ViewData</code> object.</p>
+
+<p>Consider this scenario: the original function has executed, and data has been sent to the page. However, you need to send additional data to that page in the endpoint you are extending. You must not perform a second render.</p>
+
+<p>To solve this problem, the response object provides two special methods: <code>getViewData</code> and <code>setViewData</code>. Their names are self-explanatory. <code>getViewData</code> allows you to retrieve the current <code>ViewData</code> object, while <code>setViewData</code> lets you add extra content to the <code>ViewData</code> object.</p>
