@@ -1,0 +1,28 @@
+<h2>Creating an SFRA Cartridge</h2>
+
+<p>When you need to add new functionality to your storefront site, the default approach is to create a new cartridge in your project. The base cartridge, <code>app_storefront_base</code>, contains all the code needed for an SFRA storefront to function in Commerce Cloud Digital. It includes:</p>
+
+<ul>
+    <li>The business layer, which encompasses all of the server-side components (such as Digital scripts).</li>
+    <li>The simple presentation layer, including ISML templates, common CSS files, forms, and resource files.</li>
+    <li>The specific SCSS, JavaScript, and advanced UI elements required to create the look and feel of the SFRA storefront.</li>
+</ul>
+
+<p>There are two ways to create a new cartridge: manually or using the sgmf-scripts node package. During this training, we will show you how to create it manually since it is a straightforward process.</p>
+
+<p>To create a new cartridge, you essentially need two mandatory files:</p>
+
+<ul>
+    <li><code>.project</code></li>
+    <li><code>&lt;cartridge_name&gt;.properties</code></li>
+</ul>
+
+<p>Open your <code>app_storefront_base</code> cartridge and check the file named <code>.project</code>. You will see it looks like this:</p>
+
+<p>Create a new folder inside the cartridge folder and name it, for example, <code>app_storefront_custom</code>. Make a copy of the <code>.project</code> file you opened inside <code>app_storefront_base</code> and paste it into your new folder.</p>
+
+<p>Your new cartridge needs an identical <code>.project</code> file, but you should change the content of the name tag to the name of your new cartridge.</p>
+
+<p>Follow the same process for the <code>.properties</code> file. Check the one in <code>app_storefront_base</code>, copy it to the correct location, and replace all occurrences of <code>app_storefront_base</code> with the name of your new cartridge. At the end, it should look like this:</p>
+
+<p>Whenever you create a new cartridge to add functionality, it is crucial that you maintain the same folder structure that you see in the <code>app_storefront_base</code> cartridge. Otherwise, things may not work correctly.</p>
