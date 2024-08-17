@@ -1,0 +1,62 @@
+<h2>Custom Objects</h2>
+
+<p>Custom objects enable you to extend the Salesforce B2C Commerce model to suit your business needs. They essentially create a new table in the database where you specify the primary key and storage attributes (columns) that match your requirements.</p>
+
+<h3>Custom Objects Creation</h3>
+
+<p>An example of a custom object usage is a newsletter subscription. Customers can sign up for the newsletter, but the platform does not inherently support this functionality.</p>
+
+<p>These subscriptions are intended for export, as the platform is not designed for mass mailing campaigns. It might be tempting to add the subscription data to the Profile system object, but this would restrict the sign-up process to only registered users.</p>
+
+<p>To allow anyone to subscribe to the newsletter, you need to define a Custom Object to represent it. This Newsletter Custom Object should not be replicable, as subscriptions created in staging should not be copied to Production. However, depending on the situation, you might want your Custom Object to be replicable.</p>
+
+<p>You also need to consider how to clean up Custom Objects once they have been exported or after a certain expiration period. This involves creating a cleanup batch job that should run on a schedule. You can create custom objects either through Business Manager or programmatically.</p>
+
+<p>There are two Business Manager modules to define and manage your custom objects:</p>
+<ul>
+    <li><strong>Custom Object Definitions</strong>: Facilitates naming, primary key, and column specification. Located in <strong>Administration > Site Development</strong>.</li>
+    <li><strong>Custom Object Editor</strong>: Facilitates instance creation and editing. Located in <strong>Site – &lt;site&gt; > Custom Objects > Custom Object Editor</strong>.</li>
+</ul>
+
+<p>Before you can create a custom object instance, you must first define the custom object data type in Business Manager. Custom Objects can also store configuration parameters to integrate with external systems, avoiding the need to create multiple Site Preferences. These Custom Objects need to be replicable if the settings made in Staging are suitable for Production.</p>
+
+<h3>Using Script API to Create Custom Object Instances</h3>
+
+<p>Salesforce B2C Commerce Cloud Script API provides the following classes in the <code>dw.object</code> package, among others:</p>
+<ul>
+    <li><strong>CustomAttributes</strong>: Attributes defined by a user in Business Manager to extend a system object or Custom Object. Accessible via the syntax: <code>&lt;instancename&gt;.custom.&lt;attributename&gt;</code>.</li>
+    <li><strong>CustomObject</strong>: Represents an instance of a Custom Object.</li>
+    <li><strong>CustomObjectMgr</strong>: Enables Custom Object instance creation, retrieval, deletion, and searching.</li>
+    <li><strong>PersistentObject</strong>: Enables persistent storage.</li>
+    <li><strong>ExtensibleObject</strong>: Enables custom attributes to be added.</li>
+</ul>
+
+<p>Custom Objects persist in the database. Objects of these class types are saved in the database and can be extended to store additional attributes.</p>
+
+<p>The following use of the <code>CustomObjectMgr</code> class enables the creation of an instance of Custom Objects by providing the Custom Object type and the primary key:</p>
+
+<pre><code>CustomObjectMgr.createCustomObject("NewsletterSubscription", UUIDUtils.createUUID());</code></pre>
+
+<p>The code above creates an instance with a system-generated, unique primary key. You could also use another unique value, such as an email sent via the form submission. If the value is not unique, a duplicate PK error will occur. Before creating Custom Object instances with non-system-generated IDs, it is a good practice to check if an instance with the value you want to use as a PK already exists.</p>
+
+<h3>Exercise: Creating a New Custom Object Type Using Business Manager</h3>
+
+<ol>
+    <li>Select <strong>Administration → Site Development → Custom Object Types</strong>.</li>
+    <li>Click <strong>New</strong> to create a new Custom Object type.</li>
+    <li>Fill in the required fields for the Custom Object type:
+        <ul>
+            <li><strong>ID</strong>: The unique ID of the object type. It cannot contain spaces.</li>
+            <li><strong>Key Attribute</strong>: This is the unique key for the custom object type.</li>
+            <li><strong>Data Replication</strong>: Specify whether the custom object type data will be replicable to other instances.</li>
+            <li><strong>Storage Scope</strong>: Specify whether the custom object type will be available for a site or for the entire organization.</li>
+        </ul>
+    </li>
+    <li>Click <strong>Apply</strong>. The Attribute Definitions and Attribute Grouping tabs become available.</li>
+    <li>Click the <strong>Attribute Definitions</strong> tab. Notice the default values created with your Custom Object type. These values cannot be changed once they are created.</li>
+    <li>When you are finished adding attribute definitions, create an Attribute Group. Click the <strong>Attribute Grouping</strong> tab.</li>
+    <li>In the <strong>ID</strong> field, enter a name for your grouping. In the <strong>Name</strong> field, enter a name. Click <strong>Add</strong>.</li>
+    <li>Add field attributes to the group. Click the <strong>Edit</strong> link.</li>
+    <li>To the right of the <strong>ID</strong> field, click the ellipses to select field attributes.</li>
+    <li>Select the attributes you wish to add from the list by clicking the checkbox next to each one. Click <strong>Select</strong>.</li>
+</ol>
