@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Getting Started with Business Manager</title>
+</head>
+<body>
+    <h1>Getting Started with Business Manager</h1>
+
+    <p>Now that you know about the responsibilities you have with your sandbox, let’s do some exploration. The URL to access your sandbox should be in the following format:</p>
+    <p><a href="https://devXX.XXXXXXXXX.demandware.net/on/demandware.store/Sites-Site" target="_blank">https://devXX.XXXXXXXXX.demandware.net/on/demandware.store/Sites-Site</a></p>
+
+    <h2>Sandbox Credentials Setup</h2>
+    <p>Once you try to access your sandbox, you should be presented with the following screen:</p>
+    <p>If your sandbox doesn’t have two-factor authentication enabled, fill in the username and password with your sandbox credentials to log in. If two-factor authentication is enabled, click the <strong>Log with Account Manager</strong> button and use your Account Manager credentials to log in and enter the Salesforce Authenticate pin code (a push notification might be sent to your mobile phone to log in).</p>
+
+    <h2>Business Manager Interface</h2>
+    <p>Once you first log in, you will be presented with the Business Manager welcome page.</p>
+    <p>Business Manager contains menus for administration tasks as well as site-specific (Merchant Tools) tasks. Administration menus include:</p>
+    <p>The merchant tools menus include:</p>
+    <p>The modules displayed depend on your role and the privileges assigned to you by your Administrator. If you need access to an additional menu item or module, ask your Administrator to provide access.</p>
+    <p>The Administrator is able to create roles and privileges inside Business Manager.</p>
+    <p>Right now, you won’t be able to use the Merchant Tools menu as you don’t have a site imported yet. This will be our next step.</p>
+
+    <h2>Sites</h2>
+    <p>Your instance might have multiple sites. You can have different sites to offer different brands in different countries. When you first log into Business Manager for a given instance, by default, no storefront (site) has been deployed. You must either:</p>
+    <ul>
+        <li>Create a new empty site (which contains no data).</li>
+        <li>Import an existing site, such as Storefront Reference Architecture (RefArch) or SiteGenesis.</li>
+    </ul>
+    <p>Commerce Cloud includes RefArch and SiteGenesis sample reference sites, which you can use as the basis of your custom Commerce Cloud Digital sites. They are both full-featured demonstration eCommerce sites, which you can use to explore the Digital platform and its capabilities. They are a resource for both developers and merchants:</p>
+    <ul>
+        <li>For developers, it provides sample code scripts and ISML templates.</li>
+        <li>For merchants, it provides sample configurations for catalogs, categories, products, and so on.</li>
+    </ul>
+
+    <h3>📝 Exercise: Import RefArch into your Sandbox</h3>
+    <ol>
+        <li>Log in to Business Manager.</li>
+        <li>Select <strong>Administration → Site Development → Site Import & Export</strong>.</li>
+        <li>Determine if you want to import the site from a local or a remote instance and select the corresponding radio button.</li>
+        <li>Select the <strong>Storefront Reference Architecture Demo Sites</strong> radio button and click <strong>Import</strong>.</li>
+        <li>You will be sent to a new screen with 2 options to choose from. Select the one that says <strong>Storefront Reference Architecture base</strong>.</li>
+        <li>At the bottom right corner, click <strong>Deploy</strong>.</li>
+        <li>The page will reload. You should see a red confirmation message. Click the <strong>OK</strong> button on its right side.</li>
+        <li>You can view the status of the import in the Status section of the page.</li>
+        <li>Wait at least 10 minutes and click the <strong>Refresh</strong> button under the Status section. Once the status changes to <strong>Completed</strong>, your site will be ready to use and it will be listed under the list of sites, right beside the Salesforce logo at the top left corner.</li>
+        <li>You will also receive an email that the job has completed.</li>
+    </ol>
+    <p>It is recommended that you import the Reference Storefront Architecture site (RefArch) into an empty sandbox before importing your custom sites. This prevents you from overwriting existing attributes and data for the custom site.</p>
+    <p>After importing RefArch, you can validate its behavior by comparing it to the site running on the demo instance at <a href="https://production-sitegenesis-dw.demandware.net/s/RefArch/home" target="_blank">https://production-sitegenesis-dw.demandware.net/s/RefArch/home</a>.</p>
+
+    <h3>📝 Exercise: Create an Empty Site</h3>
+    <p>Although you won't be doing this in practice, let's see how to create an empty site.</p>
+    <ol>
+        <li>In Business Manager, select <strong>Administration > Sites > Manage Sites</strong>.</li>
+        <li>Click <strong>New</strong>.</li>
+        <li>Enter the site ID, <strong>SFRATraining</strong>. The ID is required and should not include spaces.</li>
+        <li>Enter the Name, <strong>SFRATraining</strong>. The Name is required and can be any text string.</li>
+        <li>Click the <strong>Currency</strong> drop-down and select your default currency (usually USD Dollar). You can only have one default currency per site. This is a required field.</li>
+        <li>Click <strong>Apply</strong>.</li>
+        <li>Now, you can view or configure your new site.</li>
+        <li>To select the site, click the site name, <strong>SFRATraining</strong>, located on the site list.</li>
+        <li>Select <strong>Site → Storefront</strong>. A browser window opens, displaying the storefront URL.</li>
+    </ol>
+
+    <h2>Site Configuration</h2>
+    <h3>Code Version</h3>
+    <p>When you imported your RefArch site, a code version was created along with it. But what is a code version? It is basically a directory with all your cartridges. B2C Commerce lets you have multiple custom code versions uploaded to the system at the same time. You can name each of your versions as you prefer, for example, v12 or summer_release.</p>
+    <p>Select <strong>Administration > Site Development > Code Deployment</strong> and check the existing code versions. You will notice one that starts with SFRA_AP. That is the one created for your RefArch Site.</p>
+    <p>Remember how to check your code version because you will need it later to sync your local code with the sandbox. When developing your storefront, you select one active code version with which to work. All templates, pipelines, scripts, and images are taken from this active version, and that’s where your code is uploaded to (check your dw.json file).</p>
+    <p>So why is it useful to know about code versions?</p>
+    <ul>
+        <li>You can roll back your storefront to a previous version if necessary and develop your application with a newer version while maintaining an active storefront on a stable code base.</li>
+        <li>When doing Code Replication, the process transfers code versions from staging to a development or production instance and activates them.</li>
+        <li>Sometimes, even though you are doing everything right, your code changes are not being reflected on your site. By changing to a different code version and back is a known way to fix the problem when nothing else works.</li>
+    </ul>
+
+    <h3>Disable Site Caching</h3>
+    <p>In your sandbox, to see your code changes immediately on the site, you should disable site caching. This prevents the page cache from taking effect so that pages reflect the most recent code changes. In production instances, the cache is on by default.</p>
+    <h3>📝 Exercise: Disable Caching for an Empty Site or SFRATraining Site</h3>
+    <ol>
+        <li>In Business Manager, select <strong>Administration > Sites > Manage Sites</strong>.</li>
+        <li>Select your site name.</li>
+        <li>Select the <strong>Cache</strong> tab.</li>
+        <li>Set the Time to Live value to 0 and uncheck the <strong>Enable Page Caching</strong> setting.</li>
+        <li>Click <strong>Apply</strong>.</li>
+        <li>You should invalidate the cache at this stage. You can <strong>Invalidate Page Cache</strong> fully or partially.</li>
+        <li>Check the status of the SFRATraining site.</li>
+    </ol>
+
+    <h3>Rebuild Indexes</h3>
+    <p>In order for you to see
+
+ the latest changes in your storefront products, you should always have the indexes rebuilt. They are rebuilt automatically from time to time, but let’s do it manually this time so we don’t have to wait.</p>
+    <h3>📝 Exercise: Re-Index Search for RefArch</h3>
+    <ol>
+        <li>In Business Manager, select the site to index (RefArch).</li>
+        <li>Go to <strong>Merchant Tools > Search</strong>.</li>
+        <li>Click <strong>Search Indexes</strong>.</li>
+        <li>Select the top checkbox <strong>Index Type</strong> to select all the indexes.</li>
+        <li>Click <strong>Rebuild</strong>.</li>
+        <li>The indexes will start to be rebuilt. When complete, the status changes to <strong>Online</strong>.</li>
+    </ol>
+
+    <h3>Search-Friendly URLs</h3>
+    <p>In order to see our controller calls (backend functions) rather than just categories, we have to enable something called Storefront URLs. To do that, go to:</p>
+    <p><strong>Site > RefArch > Site Preferences > Storefront URLs</strong>, uncheck <strong>Enable Storefront URLs</strong>.</p>
+</body>
+</html>
