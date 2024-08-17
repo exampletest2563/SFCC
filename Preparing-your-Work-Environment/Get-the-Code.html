@@ -1,0 +1,75 @@
+<h2>Get the Code</h2>
+
+<p>There are three ways to download the code from GitHub: using the command line, GitHub Desktop, or downloading the source manually.</p>
+
+<p>To get the code:</p>
+<ol>
+    <li>Open the GitHub repository.</li>
+    <li>Click on the <strong>Clone or Download</strong> button.</li>
+    <li>Choose <strong>Download ZIP</strong>.</li>
+    <li>Save the ZIP file locally.</li>
+    <li>Unzip the file.</li>
+</ol>
+
+<h2>Visual Studio Code</h2>
+
+<p>Now let’s get your IDE set up so we can start working. First, install <strong>Visual Studio Code</strong>.</p>
+
+<h3>Install Prophet Extension</h3>
+<ol>
+    <li>Open Visual Studio Code.</li>
+    <li>Click the menu <strong>View</strong> &gt; <strong>Extensions</strong>.</li>
+    <li>Type <strong>Prophet</strong>.</li>
+    <li>Click on the <strong>Prophet Debugger</strong> result item.</li>
+    <li>Install it.</li>
+    <li>Click on the <strong>View</strong> menu item at the top menu bar and type <strong>Prophet</strong> in the input field that appears.</li>
+</ol>
+
+<p>Now that Prophet is installed, you can use its commands by pressing <strong>CTRL + SHIFT + P</strong> or by clicking on the menus <strong>View</strong> &gt; <strong>Command Palette</strong> and typing <strong>Prophet</strong> in the input field that appears.</p>
+
+<h3>Open Your Code Using Visual Studio Code</h3>
+<ol>
+    <li>Open Visual Studio Code.</li>
+    <li>Click on the menu <strong>File</strong> &gt; <strong>Open Folder</strong>.</li>
+    <li>Select the root folder containing all the source code you downloaded.</li>
+</ol>
+
+<h3>Install Your Packages</h3>
+
+<p>When working with Node.js projects (like SFRA), you need to install all dependencies listed in your <code>package.json</code> file. To do that:</p>
+<ol>
+    <li>Open the Terminal/Command Line.</li>
+    <li>Ensure the current directory is the project root folder.</li>
+    <li>Type: <code>npm install</code></li>
+    <li>Press <strong>ENTER</strong>.</li>
+    <li>Wait for all the packages to be installed.</li>
+</ol>
+
+<h3>Compile Your Code</h3>
+
+<p>In your <code>package.json</code> file, you will find several scripts for different purposes such as testing, linters, compiling scripts, uploading, and watchers. To compile your code (as of the time of writing this course), you should run the <code>build</code> script, which compiles your JavaScript, SCSS, and font files. You can run the script directly in VS Code or type <code>npm run build</code> in the terminal.</p>
+
+<p>If you’re editing client cartridge files (like JavaScript or SCSS), you must run this command repeatedly to compile the files and see your changes in the storefront. To avoid manually running the command each time, you can use the <code>watch</code> command. This command recompiles the necessary files whenever you save changes. Type <code>npm run watch</code>.</p>
+
+<h3>Create a Server Connection</h3>
+
+<p>The final configuration needed is to create a connection between your local code and your sandbox so that your changes are uploaded to the sandbox and implemented on your storefront site.</p>
+
+<p>To set up this connection, you need to create a configuration file containing your credentials and sandbox information. This file should be placed in your root folder, where Prophet will read it to sync with your sandbox and upload your code. Note that Prophet only supports one-way push connections; you cannot pull code from the sandbox to your local machine.</p>
+
+<p>Assuming you have your project open in VS Code, create a file named <code>dw.json</code> (more details can be found in the official documentation).</p>
+
+<ol>
+    <li>Fill out your sandbox URL (ignore the part <code>https://</code> and everything after <code>.com</code>).</li>
+    <li>Fill out your username.</li>
+    <li>Fill out your password.</li>
+    <li>Fill out the code version you are using.</li>
+    <li>Save the file.</li>
+    <li>Open the menu <strong>View</strong> &gt; <strong>Terminal</strong>.</li>
+    <li>In the dropdown list, select <strong>Prophet Uploader</strong> (this allows you to see Prophet’s actions).</li>
+    <li>Open the menu <strong>View</strong> &gt; <strong>Command Palette</strong> (<code>CTRL + SHIFT + P</code>).</li>
+    <li>Type <strong>Prophet</strong>.</li>
+    <li>Select <strong>Clean Project/Upload All</strong>.</li>
+</ol>
+
+<p>Once the upload is complete, Prophet will start watching for changes. From this point on, any change you make to any file will be uploaded to your sandbox. Your project is now connected to your sandbox, and you will use this connection to upload all your cartridge files to the sandbox.</p>
