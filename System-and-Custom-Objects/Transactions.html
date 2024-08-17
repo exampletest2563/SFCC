@@ -1,0 +1,23 @@
+<h2>Transactions</h2>
+
+<p>When working with objects, whether System or Custom, it's crucial to understand the concept of transactions. You can retrieve objects as much as needed, but creating, editing, or deleting an object involves a different process.</p>
+
+<p>A transaction provides a context for performing atomic changes to persistent business objects. Before a business object can be created, modified, or deleted, a transaction must be started. Changes to the affected business objects will only be made durable when the transaction is committed.</p>
+
+<p>Always remember that when you need to create, change, or delete an object instance, a transaction is required.</p>
+
+<pre><code>Transaction.wrap(function () {
+   // Your code here
+});
+</code></pre>
+
+<h3>Transaction Types</h3>
+
+<p>There are two types of transactions: Implicit and Explicit.</p>
+
+<ul>
+    <li><strong>Implicit</strong>: This is the example provided above. You define the code inside the transaction without explicitly writing any begin or commit commands. If an error occurs, the transaction will automatically roll back, and the changes will be undone.</li>
+    <li><strong>Explicit</strong>: In this type of transaction, you are responsible for defining where the transaction begins and ends.</li>
+</ul>
+
+<p>Below you will find examples of Implicit and Explicit Transactions:</p>
