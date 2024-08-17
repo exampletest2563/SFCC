@@ -1,0 +1,56 @@
+<h2>ISML Tags</h2>
+
+<p>In this section, we will cover the most frequently used tags: <code>&lt;isprint&gt;</code>, <code>&lt;isset&gt;</code>, <code>&lt;isinclude&gt;</code>, <code>&lt;isdecorate&gt;</code>, <code>&lt;isloop&gt;</code>, and the conditional tags <code>&lt;isif&gt;</code>, <code>&lt;iselseif&gt;</code>, and <code>&lt;iselse&gt;</code>.</p>
+
+<p>Although some ISML tags do not need a corresponding closing tag (e.g., the <code>&lt;isslot&gt;</code> tag), it is best practice to always use a closing tag.</p>
+
+<h3>Printing Variables within the Page</h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>Type</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>MONEY_LONG</code></td>
+      <td>Prints money with currency symbol e.g., $3,333.00</td>
+    </tr>
+    <tr>
+      <td><code>MONEY_SHORT</code></td>
+      <td>Prints money without the symbol e.g., 3,333.00</td>
+    </tr>
+    <tr>
+      <td><code>DECIMAL</code></td>
+      <td>Prints the value with two decimal places e.g., 3,455.35</td>
+    </tr>
+    <tr>
+      <td><code>INTEGER</code></td>
+      <td>Rounds off and prints only the integer portion e.g., 3,455</td>
+    </tr>
+    <tr>
+      <td><code>DATE_LONG</code></td>
+      <td>Prints date in the long format like Jul 24, 2016</td>
+    </tr>
+    <tr>
+      <td><code>DATE_SHORT</code></td>
+      <td>Prints date in the short format like 07/24/2016</td>
+    </tr>
+    <tr>
+      <td><code>encoding="off"</code></td>
+      <td>Prints strings containing HTML</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>The <code>&lt;isprint&gt;</code> tag can print the formatted output of a variable or an expression to the browser. It uses built-in styles or formatters. You can refer to the documentation for formatters. Examples of using <code>&lt;isprint&gt;</code> with styles:</p>
+
+<pre><code>&lt;isprint value="${myMoney}" style="MONEY_LONG"/&gt;
+&lt;isprint value="${myMoney}" style="MONEY_SHORT"/&gt;
+&lt;isprint value="${myNumber}" style="DECIMAL"/&gt;
+&lt;isprint value="${myNumber}" style="INTEGER"/&gt;
+&lt;isprint value="${new Date()}" style="DATE_LONG"/&gt;
+&lt;isprint value="${new Date()}" style="DATE_SHORT"/&gt;
+&lt;isprint value="${myString}" encoding="off"/&gt;</code></pre>
