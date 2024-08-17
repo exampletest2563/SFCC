@@ -1,0 +1,5 @@
+<h2>Avoid Putting Too Much Logic in Controllers</h2>
+
+<p>As you may have noticed, this controller only defines endpoints and does not include any additional helper functions. You might think this is because each of these endpoints is extensive and contains a lot of code, but that is not the case. Base controllers, at least, rely on helper functions defined in external scripts.</p>
+
+<p>By keeping logic out of controllers and placing it in reusable scripts, you ensure that your code can be utilized across various parts of your application. Additionally, if any detail needs to be changed, it can be updated and tested in one central location rather than in every place where a copy of the code exists.</p>
