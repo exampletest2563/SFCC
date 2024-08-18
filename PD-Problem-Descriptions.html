@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<body>
+    <h1>Back-End Problems Using Page Designer</h1>
+
+    <h2>Example 1: Dynamic Content Display Based on User Behavior</h2>
+    <p><strong>Description:</strong> Enhance the homepage to display personalized product recommendations by analyzing user behavior and preferences. This task involves capturing user interactions, such as viewed products and search queries, and using this data to tailor the homepage content.</p>
+    <p><strong>Tips:</strong> Consider using a session or cookie-based approach to track user behavior across visits. Implement a recommendation algorithm that ranks products based on user activity or popular items. Ensure you have a fallback mechanism for users with no prior interaction data.</p>
+    <p><strong>Hint:</strong> Utilize Salesforce Commerce Cloud’s built-in analytics to gather data on user interactions, and leverage the custom data sources to store and retrieve user-specific recommendations.</p>
+
+    <h2>Example 2: Integration with External CRM for Customer Data</h2>
+    <p><strong>Description:</strong> Synchronize customer data with an external CRM system to enhance user profiles and provide a richer user experience. This includes fetching CRM-specific details like membership levels, loyalty points, or special offers and displaying them on the user's account page.</p>
+    <p><strong>Tips:</strong> Ensure secure data transmission between Salesforce Commerce Cloud and the CRM. Use API authentication methods such as OAuth to protect sensitive customer data. Consider implementing a cache or a local database to minimize the number of external API calls.</p>
+    <p><strong>Hint:</strong> Create a custom service to handle CRM integration and update the account page template to reflect the additional CRM data. Use the Salesforce Commerce Cloud integration patterns to manage data synchronization efficiently.</p>
+
+    <h2>Example 3: Automated Promotions and Discounts</h2>
+    <p><strong>Description:</strong> Implement a system to automatically apply promotions and discounts during the checkout process based on predefined rules, such as promotional codes or cart value thresholds. This task involves creating a promotion engine and integrating it with the checkout process to apply discounts dynamically.</p>
+    <p><strong>Tips:</strong> Define clear business rules for promotions, including start and end dates, eligibility criteria, and discount values. Test the promotion engine thoroughly to handle edge cases such as overlapping promotions or invalid codes.</p>
+    <p><strong>Hint:</strong> Leverage Salesforce Commerce Cloud's promotion engine and scriptable business logic to automate the application of promotions. Update the checkout page to show applied promotions and updated totals to users.</p>
+
+    <h2>Example 4: Real-Time Inventory Updates</h2>
+    <p><strong>Description:</strong> Integrate with an external inventory management system to display real-time inventory levels on product pages. This ensures that customers see the most current stock availability, helping to prevent overselling and improving the shopping experience.</p>
+    <p><strong>Tips:</strong> Consider the frequency of inventory updates to balance between real-time accuracy and system performance. Implement error handling for cases where the external inventory system is unavailable or returns incorrect data.</p>
+    <p><strong>Hint:</strong> Create a custom service to fetch inventory data and update the product detail page template to display stock levels. Use asynchronous calls or caching to optimize performance and reduce load times.</p>
+
+    <h2>Example 5: Multi-Currency Pricing Display</h2>
+    <p><strong>Description:</strong> Display product prices in multiple currencies based on the user's location or preference. This involves creating a currency conversion service that fetches exchange rates and updates product prices accordingly.</p>
+    <p><strong>Tips:</strong> Use reliable and updated currency exchange rate sources to ensure accuracy. Allow users to select their preferred currency and store this preference in their session or user profile for consistency across sessions.</p>
+    <p><strong>Hint:</strong> Implement a currency conversion service and modify the product detail page to display prices in the selected currency. Ensure that currency selection is intuitive and accessible for users.</p>
+
+    <h2>Example 6: Custom Search Filters and Sorting</h2>
+    <p><strong>Description:</strong> Enhance the product search functionality by adding custom filters and sorting options. This task involves creating a search service that supports advanced filtering criteria and sorting preferences, and updating the search results page to include these options.</p>
+    <p><strong>Tips:</strong> Define the types of filters and sorting options that will be most useful for users, such as price ranges, categories, or ratings. Test the search functionality thoroughly to ensure that filters and sorting work correctly across various scenarios.</p>
+    <p><strong>Hint:</strong> Utilize Salesforce Commerce Cloud’s search API and custom search models to implement advanced filtering and sorting. Update the search results page template to present these options in a user-friendly manner.</p>
+
+    <h2>Example 7: User Activity Tracking and Reporting</h2>
+    <p><strong>Description:</strong> Track user activities such as product views and searches, and generate reports based on this data. This involves logging user actions, storing this data, and creating reports to analyze user behavior and trends.</p>
+    <p><strong>Tips:</strong> Ensure that activity tracking does not negatively impact site performance. Use aggregated data for reporting to avoid privacy issues and handle large volumes of data efficiently.</p>
+    <p><strong>Hint:</strong> Develop a logging service to capture user activities and a reporting script to analyze and present this data. Use Salesforce Commerce Cloud’s data management tools to facilitate data storage and retrieval.</p>
+
+    <h2>Example 8: Custom User Notification System</h2>
+    <p><strong>Description:</strong> Create a custom notification system to alert users of important events or messages, such as order status updates or special offers. This task involves developing a service to send notifications and updating user account pages to display these notifications.</p>
+    <p><strong>Tips:</strong> Ensure notifications are timely and relevant to users to maintain engagement. Provide users with options to manage their notification preferences and avoid overwhelming them with excessive alerts.</p>
+    <p><strong>Hint:</strong> Implement a notification service that integrates with your messaging infrastructure and update user account pages to display notifications clearly. Use Salesforce Commerce Cloud’s notification tools to manage user alerts effectively.</p>
+</body>
+</html>
