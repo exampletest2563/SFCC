@@ -183,4 +183,96 @@ var File = require('dw/io/File');
 var BufferedReader = require('dw/io/BufferedReader');
 
 function generateReport() {
-    var file = new File(File.IMPEX + 'userActivity
+    var file = new File(File.IMPEX + 'userActivityLog.txt');
+    var reader = new BufferedReader(file);
+    var line;
+    var reportData = [];
+    while ((line = reader.readLine()) !== null) {
+        reportData.push(line);
+    }
+    reader.close();
+
+    // Process reportData to generate a report
+    return reportData;
+}
+
+module.exports = {
+    generateReport: generateReport
+};</code></pre>
+        </li>
+    </ol>
+
+    <h2>Example 8: Custom User Notification System</h2>
+    <p><strong>Problem:</strong> Implement a custom notification system to alert users of important events or messages.</p>
+
+    <h3>Steps:</h3>
+    <ol>
+        <li>
+            <strong>Create a Notification Service:</strong>
+            <p><strong>Location:</strong> <code>app_storefront_base/cartridge/scripts/services/NotificationService.js</code></p>
+            <pre><code>// NotificationService.js
+var LocalServiceRegistry = require('dw/svc/LocalServiceRegistry');
+
+var notificationService = LocalServiceRegistry.createService('notification.integration.service', {
+    createRequest: function (svc, params) {
+        svc.setRequestMethod('POST');
+        svc.addHeader('Content-Type', 'application/json');
+        return JSON.stringify(params);
+    },
+    parseResponse: function (svc, response) {
+        return JSON.parse(response.text);
+    },
+    getRequestLogMessage: function (params) {
+        return 'Notification Service Request: ' + JSON.stringify(params);
+    },
+    getResponseLogMessage: function (response) {
+        return 'Notification Service Response: ' + response.text;
+    }
+});
+
+function sendNotification(userID, message) {
+    var response = notificationService.call({ userID: userID, message: message });
+    return response.object;
+}
+
+module.exports = {
+    sendNotification: sendNotification
+};</code></pre>
+        </li>
+        <li>
+            <strong>Modify the User Account Page Template:</strong>
+            <p><strong>Location:</strong> <code>app_storefront_base/cartridge/templates/components/Notifications.isml</code></p>
+            <pre><code>&lt;!-- Notifications.isml --&gt;
+&lt;div class="notifications"&gt;
+    &lt;h2&gt;Notifications&lt;/h2&gt;
+    &lt;isif condition="${notifications}"&gt;
+        &lt;ul&gt;
+            &lt;isforeach list="${notifications}" var="notification"&gt;
+                &lt;li&gt;${notification.message}&lt;/li&gt;
+            &lt;/isforeach&gt;
+        &lt;/ul&gt;
+    &lt;/isif&gt;
+    &lt;iselse&gt;
+        &lt;p&gt;No new notifications.&lt;/p&gt;
+    &lt;/iselse&gt;
+&lt;/div&gt;</code></pre>
+        </li>
+        <li>
+            <strong>Update Backend Logic to Send Notifications:</strong>
+            <p><strong>Location:</strong> <code>app_storefront_base/cartridge/controllers/AccountController.js</code></p>
+            <pre><code>// AccountController.js
+var NotificationService = require('*/cartridge/scripts/services/NotificationService');
+
+function updateAccount(req, res, next) {
+    var userID = req.currentCustomer.profile.customerNo;
+    var message = 'Your account has been updated successfully.';
+    NotificationService.sendNotification(userID, message);
+
+    res.render('account/AccountPage', {
+        message: message
+    });
+}</code></pre>
+        </li>
+    </ol>
+</body>
+</html>
