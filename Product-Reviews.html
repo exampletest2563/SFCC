@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter 4: Implementing Product Reviews in Salesforce Commerce Cloud</title>
+    <style>
+        .star-rating {
+            direction: rtl;
+            font-size: 24px;
+            unicode-bidi: bidi-override;
+            color: #d3d3d3;
+        }
+        .star-rating input {
+            display: none;
+        }
+        .star-rating label {
+            color: #ffd700;
+            cursor: pointer;
+        }
+        .star-rating input:checked ~ label {
+            color: #ffd700;
+        }
+    </style>
+</head>
+<body>
+    <h1>Chapter 4: Implementing Product Reviews in Salesforce Commerce Cloud</h1>
+
+    <h2>Overview</h2>
+    <p>In this chapter, you'll learn how to add a product review feature to your Salesforce Commerce Cloud store. The goal is to create a star rating system where customers can rate products, and if they are logged in, they can also leave a review. We will cover the following key areas:</p>
+    <ul>
+        <li>Displaying Star Ratings</li>
+        <li>Enabling Review Submission for Logged-in Users</li>
+        <li>Updating Custom Objects to Store Reviews</li>
+    </ul>
+
+    <h2>1. Displaying Star Ratings</h2>
+    <p><strong>Objective:</strong> Create a star rating system where customers can select a rating from 1 to 5 stars.</p>
+
+    <h3>Steps:</h3>
+    <ol>
+        <li>
+            <strong>Create the Star Rating Component:</strong>
+            <p><strong>Location:</strong> <code>app_storefront_base/cartridge/templates/components/starRating.isml</code></p>
+            <p><strong>Description:</strong> This ISML template will display the 5-star rating system.</p>
+            <p><strong>Implementation:</strong> Use CSS and JavaScript to create a visually appealing star rating UI. You can use FontAwesome or a similar icon library to display stars.</p>
+            <pre><code>&lt;!-- Star Rating Template: starRating.isml --&gt;
+&lt;div class="star-rating"&gt;
+    &lt;input type="radio" id="star5" name="rating" value="5" /&gt;&lt;label for="star5" title="5 stars"&gt;&lt;/label&gt;
+    &lt;input type="radio" id="star4" name="rating" value="4" /&gt;&lt;label for="star4" title="4 stars"&gt;&lt;/label&gt;
+    &lt;input type="radio" id="star3" name="rating" value="3" /&gt;&lt;label for="star3" title="3 stars"&gt;&lt;/label&gt;
+    &lt;input type="radio" id="star2" name="rating" value="2" /&gt;&lt;label for="star2" title="2 stars"&gt;&lt;/label&gt;
+    &lt;input type="radio" id="star1" name="rating" value="1" /&gt;&lt;label for="star1" title="1 star"&gt;&lt;/label&gt;
+&lt;/div&gt;</code></pre>
+        </li>
+        <li>
+            <strong>Style the Star Rating Component:</strong>
+            <p><strong>Location:</strong> <code>app_storefront_base/cartridge/styles/starRating.css</code></p>
+            <p><strong>Description:</strong> Add CSS to style the stars and make them interactive.</p>
+            <pre><code>/* Star Rating Styles: starRating.css */
+.star-rating {
+    direction: rtl;
+    font-size: 24px;
+    unicode-bidi: bidi-override;
+    color: #d3d3d3;
+}
+.star-rating input {
+    display: none;
+}
+.star-rating label {
+    color: #ffd700;
+    cursor: pointer;
+}
+.star-rating input:checked ~ label {
+    color: #ffd700;
+}</code></pre>
+        </li>
+        <li>
+            <strong>Integrate the Star Rating Component:</strong>
+            <p><strong>Location:</strong> <code>app_storefront_base/cartridge/templates/product/productDetail.isml</code></p>
+            <p><strong>Description:</strong> Insert the star rating component into the product detail page.</p>
+            <pre><code>&lt;!-- Product Detail Page: productDetail.isml --&gt;
+&lt;div class="product-detail"&gt;
+    &lt;h1&gt;${product.name}&lt;/h1&gt;
+    &lt;div&gt;
+        &lt;!-- Include Star Rating Component --&gt;
+        &lt;isinclude template="components/starRating.isml" /&gt;
+    &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+        </li>
+    </ol>
+
+    <h2>2. Enabling Review Submission for Logged-in Users</h2>
+    <p><strong>Objective:</strong> Allow logged-in users to submit product reviews.</p>
+
+    <h3>Steps:</h3>
+    <ol>
+        <li>
+            <strong>Check User Authentication:</strong>
+            <p><strong>Location:</strong> <code>app_storefront_base/cartridge/controllers/Product.js</code></p>
+            <p><strong>Description:</strong> Determine if the user is logged in before showing the review submission form.</p>
+            <pre><code>// Product.js - Controller Logic
+function showProductDetail(req, res, next) {
+    var product = require('*/cartridge/scripts/product/productHelper').getProduct(req.params.productId);
+    var customer = req.currentCustomer.profile;
+
+    res.render('product/productDetail', {
+        product: product,
+        isLoggedIn: customer.isAuthenticated()
+    });
+}</code></pre>
+        </li>
+        <li>
+            <strong>Create the Review Submission Form:</strong>
+            <p><strong>Location:</strong> <code>app_storefront_base/cartridge/templates/components/reviewForm.isml</code></p>
+            <p><strong>Description:</strong> Create a form for submitting reviews that will be visible to logged-in users.</p>
+            <pre><code>&lt;!-- Review Form: reviewForm.isml --&gt;
+<isif condition="${isLoggedIn}">
+    &lt;form action="${URLUtils.https('Product-SubmitReview')}" method="post"&gt;
+        &lt;input type="hidden" name="productID" value="${product.ID}" /&gt;
+        &lt;div&gt;
+            &lt;label for="rating"&gt;Rating:&lt;/label&gt;
+            &lt;div class="star-rating"&gt;
+                &lt;!-- Star Rating Inputs --&gt;
+            &lt;/div&gt;
+        &lt;/div&gt;
+        &lt;div&gt;
+            &lt;label for="reviewText"&gt;Review:&lt;/label&gt;
+            &lt;textarea name="reviewText" required&gt;&lt;/textarea&gt;
+        &lt;/div&gt;
+        &lt;button type="submit"&gt;Submit Review&lt;/button&gt;
+    &lt;/form&gt;
+</isif></code></pre>
+        </li>
+        <li>
+            <strong>Handle Review Submission:</strong>
+            <p><strong>Location:</strong> <code>app_storefront_base/cartridge/controllers/Product.js</code></p>
+            <p><strong>Description:</strong> Process the form submission and update the custom object.</p>
+            <pre><code>// Product.js - Controller Logic
+function submitReview(req, res, next) {
+    var ProductMgr = require('dw/catalog/ProductMgr');
+    var CustomObjectMgr = require('dw/object/CustomObjectMgr');
+
+    var productID = req.form.productID;
+    var rating = req.form.rating;
+    var reviewText = req.form.reviewText;
+    var product = ProductMgr.getProduct(productID);
+
+    if (product) {
+        var reviewObj = CustomObjectMgr.createCustomObject('ProductReview', productID);
+        reviewObj.custom.rating = rating;
+        reviewObj.custom.reviewText = reviewText;
+        reviewObj.custom.user = req.currentCustomer.profile.customerNo;
+        reviewObj.custom.date = new Date();
+        res.redirect(URLUtils.https('Product-Show', 'productID', productID));
+    } else {
+        res.redirect(URLUtils.https('Error-NotFound'));
+    }
+}</code></pre>
+        </li>
+    </ol>
+
+    <h2>3. Updating Custom Objects to Store Reviews</h2>
+    <p><strong>Objective:</strong> Create and update a custom object to store product reviews.</p>
+
+    <h3>Steps:</h3>
+    <ol>
+        <li>
+            <strong>Define the Custom Object Type:</strong>
+            <p><strong>Location:</strong> Salesforce Commerce Cloud Business Manager</p>
+            <p><strong>Description:</strong> Create a custom object type named <code>ProductReview</code> with attributes for rating, review text, user, and date.</p>
+            <p><strong>Custom Object Definition:</strong></p>
+            <ul>
+                <li><strong>Type ID:</strong> ProductReview</li>
+                <li><strong>Attributes:</strong></li>
+                <ul>
+                    <li><strong>rating</strong> (Number)</li>
+                    <li><strong>reviewText</strong> (String)</li>
+                    <li><strong>user</strong> (String)</li>
+                    <li><strong>date</strong> (DateTime)</li>
+                </ul>
+            </ul>
+        </li>
+        <li>
+            <strong>Implement Logic to Update Custom Objects:</strong>
+            <p><strong>Location:</strong> <code>Product.js</code> (as shown in the Review Submission section)</p>
+            <p><strong>Description:</strong> Ensure the review submission logic creates or updates the <code>ProductReview</code> custom object with the provided review details.</p>
+        </li>
+    </ol>
+
+    <h2>Hints and Tips</h2>
+    <ul>
+        <li><strong>Testing:</strong> Always test the star rating and review submission on different products to ensure it works as expected. Check for edge cases like invalid data or unauthenticated users.</li>
+        <li><strong>Security:</strong> Ensure that the review submission form is protected against Cross-Site Request Forgery (CSRF) attacks. Salesforce Commerce Cloud has built-in protections, but be vigilant.</li>
+        <li><strong>User Experience:</strong> Consider adding AJAX functionality for a more dynamic user experience when submitting reviews or updating star ratings.</li>
+    </ul>
+
+    <p>By following these steps, you will have implemented a basic product review feature in Salesforce Commerce Cloud. This will allow customers to rate and review products effectively.</p>
+</body>
+</html>
