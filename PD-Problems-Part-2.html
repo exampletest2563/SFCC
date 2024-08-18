@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<body>
+    <h2>Example 5: Multi-Currency Pricing Display</h2>
+    <p><strong>Problem:</strong> Display product prices in multiple currencies based on the user's location or preference.</p>
+
+    <h3>Steps:</h3>
+    <ol>
+        <li>
+            <strong>Create a Currency Conversion Service:</strong>
+            <p><strong>Location:</strong> <code>app_storefront_base/cartridge/scripts/services/CurrencyService.js</code></p>
+            <pre><code>// CurrencyService.js
+var LocalServiceRegistry = require('dw/svc/LocalServiceRegistry');
+
+var currencyService = LocalServiceRegistry.createService('currency.integration.service', {
+    createRequest: function (svc, params) {
+        svc.setRequestMethod('GET');
+        svc.setURL(params.url);
+        return null;
+    },
+    parseResponse: function (svc, response) {
+        return JSON.parse(response.text);
+    },
+    getRequestLogMessage: function (params) {
+        return 'Currency Service Request: ' + params.url;
+    },
+    getResponseLogMessage: function (response) {
+        return 'Currency Service Response: ' + response.text;
+    }
+});
+
+function convertCurrency(amount, fromCurrency, toCurrency) {
+    var response = currencyService.call({ url: '/convert?amount=' + amount + '&from=' + fromCurrency + '&to=' + toCurrency });
+    return response.object.convertedAmount;
+}
+
+module.exports = {
+    convertCurrency: convertCurrency
+};</code></pre>
+        </li>
+        <li>
+            <strong>Modify the Product Detail Page Template:</strong>
+            <p><strong>Location:</strong> <code>app_storefront_base/cartridge/templates/components/PriceDisplay.isml</code></p>
+            <pre><code>&lt;!-- PriceDisplay.isml --&gt;
+&lt;div class="price-display"&gt;
+    &lt;h2&gt;Price&lt;/h2&gt;
+    &lt;p&gt;Original Price: ${product.price}&lt;/p&gt;
+    &lt;p&gt;Price in ${userCurrency}: ${convertedPrice}&lt;/p&gt;
+&lt;/div&gt;</code></pre>
+        </li>
+        <li>
+            <strong>Update Backend Logic to Fetch and Convert Prices:</strong>
+            <p><strong>Location:</strong> <code>app_storefront_base/cartridge/controllers/ProductController.js</code></p>
+            <pre><code>// ProductController.js
+var CurrencyService = require('*/cartridge/scripts/services/CurrencyService');
+
+function showProduct(req, res, next) {
+    var productID = req.params.productID;
+    var product = getProduct(productID); // Custom function to fetch product
+    var userCurrency = req.currentCustomer.profile.currency;
+    var convertedPrice = CurrencyService.convertCurrency(product.price, 'USD', userCurrency);
+
+    res.render('product/ProductDetail', {
+        product: product,
+        convertedPrice: convertedPrice,
+        userCurrency: userCurrency
+    });
+}</code></pre>
+        </li>
+    </ol>
+
+    <h2>Example 6: Custom Search Filters and Sorting</h2>
+    <p><strong>Problem:</strong> Implement custom search filters and sorting options for product search results.</p>
+
+    <h3>Steps:</h3>
+    <ol>
+        <li>
+            <strong>Create a Custom Search Service:</strong>
+            <p><strong>Location:</strong> <code>app_storefront_base/cartridge/scripts/services/SearchService.js</code></p>
+            <pre><code>// SearchService.js
+var ProductSearchModel = require('dw/catalog/ProductSearchModel');
+
+function searchProducts(filters, sortBy) {
+    var searchModel = new ProductSearchModel();
+    searchModel.custom.filters = filters;
+    searchModel.custom.sortBy = sortBy;
+    var results = searchModel.search();
+    return results;
+}
+
+module.exports = {
+    searchProducts: searchProducts
+};</code></pre>
+        </li>
+        <li>
+            <strong>Modify the Search Results Page Template:</strong>
+            <p><strong>Location:</strong> <code>app_storefront_base/cartridge/templates/components/SearchResults.isml</code></p>
+            <pre><code>&lt;!-- SearchResults.isml --&gt;
+&lt;div class="search-results"&gt;
+    &lt;h2&gt;Search Results&lt;/h2&gt;
+    &lt;isif condition="${searchResults}"&gt;
+        &lt;ul&gt;
+            &lt;isforeach list="${searchResults.products}" var="product"&gt;
+                &lt;li&gt;
+                    &lt;a href="${URLUtils.url('Product-Show', 'productID', product.ID)}"&gt;
+                        &lt;img src="${product.imageURL}" alt="${product.name}" /&gt;
+                        &lt;p&gt;${product.name}&lt;/p&gt;
+                    &lt;/a&gt;
+                &lt;/li&gt;
+            &lt;/isforeach&gt;
+        &lt;/ul&gt;
+    &lt;/isif&gt;
+    &lt;iselse&gt;
+        &lt;p&gt;No products found.&lt;/p&gt;
+    &lt;/iselse&gt;
+&lt;/div&gt;</code></pre>
+        </li>
+        <li>
+            <strong>Update Backend Logic for Search and Sorting:</strong>
+            <p><strong>Location:</strong> <code>app_storefront_base/cartridge/controllers/SearchController.js</code></p>
+            <pre><code>// SearchController.js
+var SearchService = require('*/cartridge/scripts/services/SearchService');
+
+function search(req, res, next) {
+    var filters = req.query.filters; // Assume filters are passed via query params
+    var sortBy = req.query.sortBy;
+    var searchResults = SearchService.searchProducts(filters, sortBy);
+
+    res.render('search/SearchResults', {
+        searchResults: searchResults
+    });
+}</code></pre>
+        </li>
+    </ol>
+
+    <h2>Example 7: User Activity Tracking and Reporting</h2>
+    <p><strong>Problem:</strong> Track user activities (e.g., product views, searches) and generate reports based on this data.</p>
+
+    <h3>Steps:</h3>
+    <ol>
+        <li>
+            <strong>Create a User Activity Logging Service:</strong>
+            <p><strong>Location:</strong> <code>app_storefront_base/cartridge/scripts/services/ActivityLoggingService.js</code></p>
+            <pre><code>// ActivityLoggingService.js
+var FileWriter = require('dw/io/FileWriter');
+var File = require('dw/io/File');
+
+function logActivity(userID, activityType, details) {
+    var file = new File(File.IMPEX + 'userActivityLog.txt');
+    var writer = new FileWriter(file, FileWriter.APPEND);
+    var logEntry = userID + ',' + activityType + ',' + JSON.stringify(details) + '\n';
+    writer.write(logEntry);
+    writer.close();
+}
+
+module.exports = {
+    logActivity: logActivity
+};</code></pre>
+        </li>
+        <li>
+            <strong>Modify Components to Log User Activities:</strong>
+            <p><strong>Location:</strong> <code>app_storefront_base/cartridge/controllers/ProductController.js</code></p>
+            <pre><code>// ProductController.js
+var ActivityLoggingService = require('*/cartridge/scripts/services/ActivityLoggingService');
+
+function showProduct(req, res, next) {
+    var productID = req.params.productID;
+    var user = req.currentCustomer.profile;
+    var product = getProduct(productID); // Custom function to fetch product
+
+    ActivityLoggingService.logActivity(user.customerNo, 'Product View', { productID: productID });
+
+    res.render('product/ProductDetail', {
+        product: product
+    });
+}</code></pre>
+        </li>
+        <li>
+            <strong>Create a Reporting Script:</strong>
+            <p><strong>Location:</strong> <code>app_storefront_base/cartridge/scripts/ReportGeneration.js</code></p>
+            <pre><code>// ReportGeneration.js
+var File = require('dw/io/File');
+var BufferedReader = require('dw/io/BufferedReader');
+
+function generateReport() {
+    var file = new File(File.IMPEX + 'userActivity
