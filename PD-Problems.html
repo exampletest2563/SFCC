@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Back-End Problems Using Page Designer</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+        h1, h2 {
+            color: #0070d2;
+        }
+        pre {
+            background-color: #f4f4f4;
+            border: 1px solid #ddd;
+            padding: 10px;
+            overflow-x: auto;
+        }
+        ul {
+            list-style-type: disc;
+            margin: 0;
+            padding: 0 0 0 20px;
+        }
+        li {
+            margin-bottom: 10px;
+        }
+        code {
+            background-color: #f4f4f4;
+            padding: 2px 4px;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Back-End Problems Using Page Designer</h1>
+
+    <h2>Example 1: Dynamic Content Display Based on User Behavior</h2>
+    <p><strong>Problem:</strong> Display personalized product recommendations on the homepage based on user behavior and preferences.</p>
+
+    <h3>Steps:</h3>
+    <ol>
+        <li>
+            <strong>Create a Custom Data Source:</strong>
+            <p>Define a custom data source to capture user interactions (e.g., products viewed, categories browsed) and store them in a custom object or data warehouse.</p>
+        </li>
+        <li>
+            <strong>Modify the Home Page Template:</strong>
+            <p><strong>Location:</strong> <code>app_storefront_base/cartridge/templates/components/PersonalizedRecommendations.isml</code></p>
+            <pre><code>&lt;!-- PersonalizedRecommendations.isml --&gt;
+&lt;div class="recommendations"&gt;
+    &lt;h2&gt;Recommended for You&lt;/h2&gt;
+    &lt;isif condition="${userPreferences}"&gt;
+        &lt;ul&gt;
+            &lt;isforeach list="${userPreferences.recommendations}" var="product"&gt;
+                &lt;li&gt;
+                    &lt;a href="${URLUtils.url('Product-Show', 'productID', product.ID)}"&gt;
+                        &lt;img src="${product.imageURL}" alt="${product.name}" /&gt;
+                        &lt;p&gt;${product.name}&lt;/p&gt;
+                    &lt;/a&gt;
+                &lt;/li&gt;
+            &lt;/isforeach&gt;
+        &lt;/ul&gt;
+    &lt;/isif&gt;
+    &lt;iselse&gt;
+        &lt;p&gt;We don't have recommendations for you at this time.&lt;/p&gt;
+    &lt;/iselse&gt;
+&lt;/div&gt;</code></pre>
+        </li>
+        <li>
+            <strong>Implement Backend Logic:</strong>
+            <p><strong>Location:</strong> <code>app_storefront_base/cartridge/controllers/RecommendationController.js</code></p>
+            <pre><code>// RecommendationController.js
+function getRecommendations(req, res, next) {
+    var user = req.currentCustomer.profile;
+    var recommendations = fetchRecommendationsForUser(user); // Custom logic to get recommendations
+    res.render('components/PersonalizedRecommendations', {
+        userPreferences: { recommendations: recommendations }
+    });
+}</code></pre>
+        </li>
+        <li>
+            <strong>Integrate Data Source:</strong>
+            <p>Ensure the custom data source is integrated with your recommendation engine or analytics system.</p>
+        </li>
+    </ol>
+
+    <h2>Example 2: Integration with External CRM for Customer Data</h2>
+    <p><strong>Problem:</strong> Synchronize customer data with an external CRM system and display CRM-specific data on the account page.</p>
+
+    <h3>Steps:</h3>
+    <ol>
+        <li>
+            <strong>Create a Custom Integration Service:</strong>
+            <p><strong>Location:</strong> <code>app_storefront_base/cartridge/scripts/services/CRMService.js</code></p>
+            <pre><code>// CRMService.js
+var LocalServiceRegistry = require('dw/svc/LocalServiceRegistry');
+
+var crmService = LocalServiceRegistry.createService('crm.integration.service', {
+    createRequest: function (svc, params) {
+        svc.setRequestMethod('POST');
+        svc.addHeader('Content-Type', 'application/json');
+        return JSON.stringify(params);
+    },
+    parseResponse: function (svc, response) {
+        return JSON.parse(response.text);
+    },
+    getRequestLogMessage: function (params) {
+        return 'CRM Service Request: ' + JSON.stringify(params);
+    },
+    getResponseLogMessage: function (response) {
+        return 'CRM Service Response: ' + response.text;
+    }
+});
+
+function fetchCustomerData(customerId) {
+    var response = crmService.call({ customerId: customerId });
+    return response.object;
+}
+
+module.exports = {
+    fetchCustomerData: fetchCustomerData
+};</code></pre>
+        </li>
+        <li>
+            <strong>Modify the Account Page Template:</strong>
+            <p><strong>Location:</strong> <code>app_storefront_base/cartridge/templates/components/CRMAccountInfo.isml</code></p>
+            <pre><code>&lt;!-- CRMAccountInfo.isml --&gt;
+&lt;div class="crm-account-info"&gt;
+    &lt;h2&gt;CRM Information&lt;/h2&gt;
+    &lt;isif condition="${crmData}"&gt;
+        &lt;p&gt;CRM ID: ${crmData.crmID}&lt;/p&gt;
+        &lt;p&gt;Membership Level: ${crmData.membershipLevel}&lt;/p&gt;
+        &lt;!-- Add more CRM-specific details here --&gt;
+    &lt;/isif&gt;
+    &lt;iselse&gt;
+        &lt;p&gt;No CRM data available.&lt;/p&gt;
+    &lt;/iselse&gt;
+&lt;/div&gt;</code></pre>
+        </li>
+        <li>
+            <strong>Update Backend Logic:</strong>
+            <p><strong>Location:</strong> <code>app_storefront_base/cartridge/controllers/AccountController.js</code></p>
+            <pre><code>// AccountController.js
+var CRMService = require('*/cartridge/scripts/services/CRMService');
+
+function showAccount(req, res, next) {
+    var customer = req.currentCustomer.profile;
+    var crmData = CRMService.fetchCustomerData(customer.customerNo);
+
+    res.render('account/AccountPage', {
+        crmData: crmData
+    });
+}</code></pre>
+        </li>
+    </ol>
+
+    <h2>Example 3: Automated Promotions and Discounts</h2>
+    <p><strong>Problem:</strong> Implement automated promotions and discounts based on predefined business rules and customer segments.</p>
+
+    <h3>Steps:</h3>
+    <ol>
+        <li>
+            <strong>Create a Promotion Engine:</strong>
+            <p><strong>Location:</strong> <code>app_storefront_base/cartridge/scripts/services/PromotionService.js</code></p>
+            <pre><code>// PromotionService.js
+function applyPromotions(order) {
+    // Logic to apply promotions
+    if (order.totalAmount > 100) {
+        order.addPromotion('10% off on orders over $100');
+    }
+    return order;
+}
+
+module.exports = {
+    applyPromotions: applyPromotions
+};</code></pre>
+        </li>
+        <li>
+            <strong>Modify the Checkout Page Template:</strong>
+            <p><strong>Location:</strong> <code>app_storefront_base/cartridge/templates/components/AppliedPromotions.isml</code></p>
+            <pre><code>&lt;!-- AppliedPromotions.isml --&gt;
+&lt;div class="applied-promotions"&gt;
+    &lt;h2&gt;Applied Promotions&lt;/h2&gt;
+    &lt;isif condition="${promotions}"&gt;
+        &lt;ul&gt;
+            &lt;isforeach list="${promotions}" var="promotion"&gt;
+                &lt;li&gt;${promotion}&lt;/li&gt;
+            &lt;/isforeach&gt;
+        &lt;/ul&gt;
+    &lt;/isif&gt;
+    &lt;iselse&gt;
+        &lt;p&gt;No promotions applied.&lt;/p&gt;
+    &lt;/iselse&gt;
+&lt;/div&gt;</code></pre>
+        </li>
+        <li>
+            <strong>Integrate Promotion Logic into Checkout Process:</strong>
+            <p><strong>Location:</strong> <code>app_storefront_base/cartridge/controllers/CheckoutController.js</code></p>
+            <pre><code>// CheckoutController.js
+var PromotionService = require('*/cartridge/scripts/services/PromotionService');
+
+function checkout(req, res, next) {
+    var order = req.session.order;
+    order = PromotionService.applyPromotions(order);
+
+    res.render('checkout/CheckoutPage', {
+        order: order,
+        promotions: order.promotions
+    });
+}</code></pre>
+        </li>
+    </ol>
+
+    <h2>Example 4: Real-Time Inventory Updates</h2>
+    <p><strong>Problem:</strong> Display real-time inventory levels for products, integrating with an external inventory management system.</p>
+
+    <h3>Steps:</h3>
+    <ol>
+        <li>
+            <strong>Create an Inventory Integration Service:</strong>
+            <p><strong>Location:</strong> <code>app_storefront_base/cartridge/scripts/services/InventoryService.js</code></p>
+            <pre><code>// InventoryService.js
+var LocalServiceRegistry = require('dw/svc/LocalServiceRegistry');
+
+var inventoryService = LocalServiceRegistry.createService('inventory.integration.service', {
+    createRequest: function (svc, params) {
+        svc.setRequestMethod('GET');
+        svc.setURL(params.url);
+        return null;
+    },
+    parseResponse: function (svc, response) {
+        return JSON.parse(response.text);
+    },
+    getRequestLogMessage: function (params) {
+        return 'Inventory Service Request: ' + params.url;
+    },
+    getResponseLogMessage: function (response) {
+        return 'Inventory Service Response: ' + response.text;
+    }
+});
+
+function getInventory(productID) {
+    var response = inventoryService.call({ url: '/inventory/' + productID });
+    return response.object;
+}
+
+module.exports = {
+    getInventory: getInventory
+};</code></pre>
+        </li>
+        <li>
+            <strong>Modify the Product Detail Page Template:</strong>
+            <p><strong>Location:</strong> <code>app_storefront_base/cartridge/templates/components/InventoryStatus.isml</code></p>
+            <pre><code>&lt;!-- InventoryStatus.isml --&gt;
+&lt;div class="inventory-status"&gt;
+    &lt;h2&gt;Inventory Status&lt;/h2&gt;
+    &lt;isif condition="${inventory}"&gt;
+        &lt;p&gt;Available Stock: ${inventory.stockLevel}&lt;/p&gt;
+    &lt;/isif&gt;
+    &lt;iselse&gt;
+        &lt;p&gt;Inventory information is not available.&lt;/p&gt;
+    &lt;/iselse&gt;
+&lt;/div&gt;</code></pre>
+        </li>
+        <li>
+            <strong>Update Backend Logic to Fetch Inventory:</strong>
+            <p><strong>Location:</strong> <code>app_storefront_base/cartridge/controllers/ProductController.js</code></p>
+            <pre><code>// ProductController.js
+var InventoryService = require('*/cartridge/scripts/services/InventoryService');
+
+function showProduct(req, res, next) {
+    var productID = req.params.productID;
+    var inventory = InventoryService.getInventory(productID);
+
+    res.render('product/ProductDetail', {
+        inventory: inventory
+    });
+}</code></pre>
+        </li>
+    </ol>
+</body>
+</html>
